@@ -5,17 +5,33 @@ import { RouterLink } from 'vue-router';
 
 <template>
   <main>
-    <div class="login">
-    <RouterLink to="/login">Log in</RouterLink>
-    <RouterLink to="/register">Register new account</RouterLink>
-    <Welcome />
+    <div class="links">
+      <RouterLink to="/register">Sign up</RouterLink>
+      <RouterLink class="login" to="/login">Log in</RouterLink>
     </div>
+    <Welcome />
   </main>
 </template>
 
 <style scoped>
-.login {
+.links {
   display: flex;
   gap: 1rem;
+}
+
+.login {
+  background-color: hsla(160, 100%, 37%, 1);
+  border-radius: 10px;
+  color: var(--vt-c-black);;
+}
+
+a {
+  padding: 5px;
+}
+
+@media(hover: hover) {
+  .login:hover {
+    background-color: hsla(160, 96%, 46%, 0.596);
+  }
 }
 </style>

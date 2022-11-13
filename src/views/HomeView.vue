@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import Welcome from '@/components/Welcome.vue';
+import Welcome from '../components/Welcome.vue';
+import Search from '../components/Search.vue';
 import { RouterLink } from 'vue-router';
 </script>
 
 <template>
   <main>
-    <div class="links">
+    <div class="login-register-btns">
       <RouterLink to="/register">Sign up</RouterLink>
       <RouterLink class="login" to="/login">Log in</RouterLink>
     </div>
     <Welcome />
+    <Search />
   </main>
 </template>
 
 <style scoped>
-.links {
+.login-register-btns {
   display: flex;
   gap: 1rem;
 }

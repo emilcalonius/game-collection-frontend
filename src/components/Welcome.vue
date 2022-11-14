@@ -1,29 +1,17 @@
 <script lang="ts">
-export default {
-  data() {
-    return {
+import {getName, getToken, isLoggedIn} from '../utils/jwtUtil';
 
-    }
-  },
+export default {
   methods: {
     isLoggedIn(): Boolean {
-      return document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/) !== null;
-    },
-    getToken(): String | null | undefined {
-      return (document.cookie.match(/^(?:.*;)?\s*token\s*=\s*([^;]+)(?:.*)?$/)||[,null])[1];
+      return isLoggedIn();
     },
     getName(): String | null {
-      const token = this.getToken();
-      if(token == null || token == undefined) return null;
-      var base64Url = token.split('.')[1];
-      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-
-      const decodedToken = JSON.parse(jsonPayload);
-
-      return decodedToken.name;
+      const token = getToken();
+      if(typeof token === "string") {
+        return getName(token);
+      } 
+      return null;
     }
   }
 }

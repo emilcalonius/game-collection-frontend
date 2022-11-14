@@ -12,6 +12,7 @@ import { RouterLink } from 'vue-router';
     </div>
     <Welcome />
     <Search />
+    <RouterLink to="/profile">Profile</RouterLink>
   </main>
 </template>
 

@@ -44,7 +44,7 @@ export default {
   flex-direction: column;
   overflow-y: scroll;
   max-height: 300px;
-  max-width: 500px;
+  width: 500px;
 }
 
 .ais-Hits-item {

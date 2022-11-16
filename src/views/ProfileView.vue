@@ -1,4 +1,5 @@
 <script lang="ts">
+import EditUserInfo from '@/components/EditUserInfo.vue';
 import UserInfo from '@/components/UserInfo.vue';
 import axios from 'axios';
 import {isLoggedIn, getToken} from '../utils/jwtUtil';
@@ -24,12 +25,14 @@ export default {
       this.user = user;
   },
   components: {
-    UserInfo
-  },
+    UserInfo,
+    EditUserInfo
+},
   data() {
     return {
       token: "",
-      user: {}
+      user: {},
+      showEdit: false
     }
   }
 }
@@ -37,5 +40,6 @@ export default {
 
 <template>
   <h1>Profile</h1>
-  <UserInfo :user="user" />
+  <UserInfo v-if="!showEdit" :user="user" @click-show-edit="(value) => showEdit = value" />
+  <EditUserInfo v-if="showEdit" :user="user"  @click-show-edit="(value) => showEdit = value" />
 </template>

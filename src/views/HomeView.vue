@@ -16,10 +16,10 @@ function logout() {
       <RouterLink to="/register">Sign up</RouterLink>
       <RouterLink class="login" to="/login">Log in</RouterLink>
     </div>
+    <RouterLink v-if="isLoggedIn()" to="/profile">Profile</RouterLink>
     <button v-if="isLoggedIn()" class="logout" @click="logout()">Log out</button>
     <Welcome />
     <Search />
-    <RouterLink to="/profile">Profile</RouterLink>
   </main>
 </template>
 
@@ -35,12 +35,12 @@ function logout() {
   color: var(--vt-c-black);;
 }
 
-a {
+a, button {
   padding: 5px;
 }
 
 @media(hover: hover) {
-  .login:hover {
+  .login:hover, .logout:hover {
     background-color: hsla(160, 96%, 46%, 0.596);
   }
 }

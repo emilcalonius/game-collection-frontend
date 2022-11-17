@@ -7,6 +7,14 @@ export default {
       client: instantMeiliSearch("http://localhost:7700"),
       searchTerm: ""
     }
+  },
+  methods: {
+    addGame(game: Object) {
+
+    },
+    showGame(game: Object) {
+
+    }
   }
 }
 </script>
@@ -21,8 +29,11 @@ export default {
     />
     <ais-hits v-if="searchTerm !== ''">
       <template v-slot:item="{ item }">
-        <img :src="item['Header image']" alt="game-header-image" />
-        <h2 class="game-name">{{ item.Name }}</h2>
+        <div class="game-info">
+          <img :src="item['Header image']" alt="game-header-image" />
+          <h2 class="game-name">{{ item.Name }}</h2>
+        </div>
+        <button @click="addGame(item)">+</button>
       </template>
     </ais-hits>
   </ais-instant-search>
@@ -45,6 +56,9 @@ export default {
   overflow-y: scroll;
   max-height: 300px;
   width: 500px;
+  background-color: #303030;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 .ais-Hits-item {
@@ -68,5 +82,22 @@ img {
 
 .ais-SearchBox-resetIcon {
   display: none;
+}
+
+.game-info {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+@media (hover: hover) {
+  .game-info:hover {
+    background-color: #363636;
+  }
 }
 </style>

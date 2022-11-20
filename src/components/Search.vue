@@ -1,19 +1,25 @@
 <script lang="ts">
+import router from "@/router";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
+import { useGameStore } from "@/stores/game";
+
+import type { Game } from '../models/game';
 
 export default {
   data() {
     return {
       client: instantMeiliSearch("http://localhost:7700"),
-      searchTerm: ""
+      searchTerm: "",
+      gameStore: useGameStore()
     }
   },
   methods: {
-    addGame(game: Object) {
+    addGame(game: Game) {
 
     },
-    showGame(game: Object) {
-
+    showGame(game: Game) {
+      router.push(`/game/${game.Name}`);
+      this.gameStore.game = game;
     }
   }
 }
@@ -29,7 +35,7 @@ export default {
     />
     <ais-hits v-if="searchTerm !== ''">
       <template v-slot:item="{ item }">
-        <div class="game-info">
+        <div class="game-info" @click="showGame(item)">
           <img :src="item['Header image']" alt="game-header-image" />
           <h2 class="game-name">{{ item.Name }}</h2>
         </div>

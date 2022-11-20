@@ -19,16 +19,22 @@ const gameStore = useGameStore();
       </div>
     </div>
     <div class="categories">
-      <div class="genres">
+      <div v-if="gameStore.game.Genres !== ''" class="genres">
         <h3>Genres:</h3>
         <p>{{ gameStore.game.Genres.split(',').join(', ') }}</p>
       </div>
-      <div class="tags">
+      <div v-if="gameStore.game.Tags !== ''" class="tags">
         <h3>Tags:</h3>
         <p>{{ gameStore.game.Tags.split(',').join(', ') }}</p>
       </div>
     </div>
+    <div class="release-date">
+      <h3>Release date:</h3>
+      <p>{{ gameStore.game['Release date'] }}</p>
+    </div>
+    <h2>Description:</h2>
     <p>{{ gameStore.game["About the game"] }}</p>
+    <h2>Screenshots:</h2>
     <div class="screenshots">
       <img class="screenshot" v-for="gameScreenshot in gameStore.game.Screenshots.split(',')" :src="gameScreenshot" alt="screenshot" />
     </div>

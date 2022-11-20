@@ -42,14 +42,16 @@ const gameStore = useGameStore();
 </template>
 
 <style scoped>
-.publishers, .developers {
+.publishers, .developers, .genres, .tags {
   display: flex;
   flex-direction: column;
+  max-width: 50%;
 }
 
 .categories, .devs {
   display: flex;
   gap: 1rem;
+  max-width: 100%;
 }
 
 .container {

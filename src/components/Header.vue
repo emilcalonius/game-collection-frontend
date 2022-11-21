@@ -14,8 +14,10 @@ function logout() {
       <RouterLink to="/register">Sign up</RouterLink>
       <RouterLink class="login" to="/login">Log in</RouterLink>
     </div>
-    <RouterLink v-if="isLoggedIn()" to="/profile">Profile</RouterLink>
-    <button v-if="isLoggedIn()" class="logout" @click="logout()">Log out</button>
+    <div class="logged-in-btns">
+      <RouterLink v-if="isLoggedIn()" to="/profile">Profile</RouterLink>
+      <button v-if="isLoggedIn()" class="logout" @click="logout()">Log out</button>
+    </div>
   </div>
 </template>
 
@@ -26,6 +28,11 @@ function logout() {
   justify-content: flex-end;
 }
 .login-register-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.logged-in-btns {
   display: flex;
   gap: 1rem;
 }

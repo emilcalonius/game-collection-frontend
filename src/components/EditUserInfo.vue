@@ -7,6 +7,10 @@ export default {
     user: Object
   },
   methods: {
+    clickCancelButton(e: MouseEvent) {
+      e.preventDefault();
+      this.$emit('click-show-edit', false);
+    },
     async clickSaveButton(e: MouseEvent) {
       e.preventDefault();
       if(isLoggedIn()) {
@@ -50,12 +54,33 @@ export default {
       <input v-model="avatar" placeholder="URL to avatar" id="avatar" />
       <label for="bio">Bio:</label>
       <textarea v-model="bio" placeholder="Write your bio here" rows="5" id="bio" />
-      <button @click="e => clickSaveButton(e)">Save</button>
+      <div class="profile-edit-btns">
+        <button class="cancel" @click="e => clickCancelButton(e)">Cancel</button>
+        <button @click="e => clickSaveButton(e)">Save</button>
+      </div>  
     </form>
   </div>
 </template>
 
 <style scoped>
+.cancel {
+  border-radius: 0;
+  background-color: transparent;
+  border: 0;
+  color: hsla(160, 100%, 37%, 1);
+}
+
+@media(hover: hover) {
+  .cancel:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+.profile-edit-btns {
+  display: flex;
+  gap: 1rem;
+}
+
 .edit-container, form {
   display: flex;
   flex-direction: column;

@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import Header from '../components/Header.vue';
 import { useGameStore } from '@/stores/game';
 
 const gameStore = useGameStore();
 </script>
 
 <template>
+  <Header />
   <div class="container">
     <img class="header-img" :src="gameStore.game['Header image']" alt="">
     <h1>{{ gameStore.game.Name }}</h1>

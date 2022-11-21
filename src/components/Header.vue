@@ -9,15 +9,22 @@ function logout() {
 </script>
 
 <template>
-  <div class="login-register-btns" v-if="!isLoggedIn()">
+  <div class="header-container">
+    <div class="login-register-btns" v-if="!isLoggedIn()">
       <RouterLink to="/register">Sign up</RouterLink>
       <RouterLink class="login" to="/login">Log in</RouterLink>
     </div>
     <RouterLink v-if="isLoggedIn()" to="/profile">Profile</RouterLink>
     <button v-if="isLoggedIn()" class="logout" @click="logout()">Log out</button>
+  </div>
 </template>
 
 <style scoped>
+.header-container {
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
 .login-register-btns {
   display: flex;
   gap: 1rem;

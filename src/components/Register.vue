@@ -64,7 +64,6 @@ input {
 
 button {
   width: 5rem;
-  border-radius: 10px;
 }
 
 .error {

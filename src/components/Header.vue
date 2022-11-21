@@ -30,18 +30,14 @@ function logout() {
   gap: 1rem;
 }
 
-.login, .logout {
+.login {
   background-color: hsla(160, 100%, 37%, 1);
   border-radius: 10px;
-  color: var(--vt-c-black);;
-}
-
-a, button {
-  padding: 5px;
+  color: var(--vt-c-black);
 }
 
 @media(hover: hover) {
-  .login:hover, .logout:hover {
+  .login:hover {
     background-color: hsla(160, 96%, 46%, 0.596);
   }
 }

@@ -10,13 +10,18 @@ function logout() {
 
 <template>
   <div class="header-container">
-    <div class="login-register-btns" v-if="!isLoggedIn()">
-      <RouterLink to="/register">Sign up</RouterLink>
-      <RouterLink class="login" to="/login">Log in</RouterLink>
-    </div>
-    <div class="logged-in-btns">
+    <div>
+      <RouterLink to="/">Home</RouterLink>
       <RouterLink v-if="isLoggedIn()" to="/profile">Profile</RouterLink>
-      <button v-if="isLoggedIn()" class="logout" @click="logout()">Log out</button>
+    </div>
+    <div>
+      <div class="logged-out-btns" v-if="!isLoggedIn()">
+        <RouterLink to="/register">Sign up</RouterLink>
+        <RouterLink class="login" to="/login">Log in</RouterLink>
+      </div>
+      <div class="logged-in-btns">
+        <button v-if="isLoggedIn()" class="logout" @click="logout()">Log out</button>
+      </div>
     </div>
   </div>
 </template>
@@ -25,9 +30,9 @@ function logout() {
 .header-container {
   padding-bottom: 2rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
-.login-register-btns {
+.logged-out-btns {
   display: flex;
   gap: 1rem;
 }

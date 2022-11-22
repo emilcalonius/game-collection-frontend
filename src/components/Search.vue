@@ -45,7 +45,7 @@ export default {
   </ais-instant-search>
 </template>
 
-<style scoped>
+<style>
 .ais-InstantSearch {
   max-height: 300px;
   max-width: 500px;

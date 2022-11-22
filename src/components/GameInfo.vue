@@ -6,37 +6,37 @@ const gameStore = useGameStore();
 
 <template>
   <div class="container">
-    <img class="header-img" :src="gameStore.game['Header image']" alt="">
-    <h1>{{ gameStore.game.Name }}</h1>
+    <img class="header-img" :src="gameStore.game.header_image" alt="">
+    <h1>{{ gameStore.game.name }}</h1>
     <div class="devs">
       <div class="developers">
         <h2>Developers:</h2>
-        <p>{{ gameStore.game.Developers.split(',').join(', ') }}</p>
+        <p>{{ gameStore.game.developers.toString().replace(",", ", ") }}</p>
       </div>
       <div class="publishers">
         <h2>Publishers:</h2>
-        <p>{{ gameStore.game.Publishers.split(',').join(', ') }}</p>
+        <p>{{ gameStore.game.publishers.toString().replace(",", ", ") }}</p>
       </div>
     </div>
     <div class="categories">
-      <div v-if="gameStore.game.Genres !== ''" class="genres">
+      <div v-if="gameStore.game.genres.length > 0" class="genres">
         <h3>Genres:</h3>
-        <p>{{ gameStore.game.Genres.split(',').join(', ') }}</p>
+        <p>{{ gameStore.game.genres.toString().replace(",", ", ") }}</p>
       </div>
-      <div v-if="gameStore.game.Tags !== ''" class="tags">
+      <div v-if="gameStore.game.tags.length > 0" class="tags">
         <h3>Tags:</h3>
-        <p>{{ gameStore.game.Tags.split(',').join(', ') }}</p>
+        <p>{{ gameStore.game.tags.toString().replace(",", ", ") }}</p>
       </div>
     </div>
     <div class="release-date">
       <h3>Release date:</h3>
-      <p>{{ gameStore.game['Release date'] }}</p>
+      <p>{{ gameStore.game.release_date }}</p>
     </div>
     <h2>Description:</h2>
-    <p>{{ gameStore.game["About the game"] }}</p>
+    <p>{{ gameStore.game.about_the_game }}</p>
     <h2>Screenshots:</h2>
     <div class="screenshots">
-      <img class="screenshot" v-for="gameScreenshot in gameStore.game.Screenshots.split(',')" :src="gameScreenshot" alt="screenshot" />
+      <img class="screenshot" v-for="gameScreenshot in gameStore.game.screenshots" :src="gameScreenshot" alt="screenshot" />
     </div>
   </div>
 </template>

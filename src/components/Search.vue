@@ -18,7 +18,7 @@ export default {
 
     },
     showGame(game: Game) {
-      router.push(`/game/${game.Name}`);
+      router.push(`/game/${game.name}`);
       this.gameStore.game = game;
     }
   }
@@ -36,8 +36,8 @@ export default {
     <ais-hits v-if="searchTerm !== ''">
       <template v-slot:item="{ item }">
         <div class="game-info" @click="showGame(item)">
-          <img :src="item['Header image']" alt="game-header-image" />
-          <h2 class="game-name">{{ item.Name }}</h2>
+          <img :src="item.header_image" alt="game-header-image" />
+          <h2 class="game-name">{{ item.name }}</h2>
         </div>
         <button @click="addGame(item)">+</button>
       </template>

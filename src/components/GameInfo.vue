@@ -1,42 +1,62 @@
-<script setup lang="ts">
-import { useGameStore } from '@/stores/game';
+<script lang="ts">
+import type { Game } from '@/models/game';
+import MeiliSearch from 'meilisearch';
 
-const gameStore = useGameStore();
+export default {
+  data() {
+    return {
+      game: {} as Game,
+      client: new MeiliSearch({ host: 'http://localhost:7700'}),
+    }
+  },
+  async mounted() {
+    let game;
+    let gameId = this.$route.params.id as string;
+    await this.client
+      .index("games")
+      .getDocument(gameId)
+      .then(res => game = res as Game)
+      .catch(err => console.log(err));
+    if(game !== undefined)
+    this.game = game;
+  }
+}
 </script>
 
 <template>
-  <div class="container">
-    <img class="header-img" :src="gameStore.game.header_image" alt="">
-    <h1>{{ gameStore.game.name }}</h1>
+  <p v-if="Object.keys(game).length === 0">Game not found!</p>
+  <div v-else class="container">
+    <img class="header-img" :src="game.header_image" alt="">
+    <h1>{{ game.name }}</h1>
     <div class="devs">
       <div class="developers">
         <h2>Developers:</h2>
-        <p>{{ gameStore.game.developers.toString().replace(",", ", ") }}</p>
+        <p>{{ game.developers.join(", ") }}</p>
       </div>
       <div class="publishers">
         <h2>Publishers:</h2>
-        <p>{{ gameStore.game.publishers.toString().replace(",", ", ") }}</p>
+        <p>{{ game.publishers.join(", ") }}</p>
       </div>
     </div>
     <div class="categories">
-      <div v-if="gameStore.game.genres.length > 0" class="genres">
+      <div v-if="game.genres.length > 0" class="genres">
         <h3>Genres:</h3>
-        <p>{{ gameStore.game.genres.toString().replace(",", ", ") }}</p>
+        <p>{{ game.genres.join(", ") }}</p>
       </div>
-      <div v-if="gameStore.game.tags.length > 0" class="tags">
+      <div v-if="game.tags.length > 0" class="tags">
         <h3>Tags:</h3>
-        <p>{{ gameStore.game.tags.toString().replace(",", ", ") }}</p>
+        <p>{{ game.tags.join(", ") }}</p>
       </div>
     </div>
     <div class="release-date">
       <h3>Release date:</h3>
-      <p>{{ gameStore.game.release_date }}</p>
+      <p>{{ game.release_date }}</p>
     </div>
     <h2>Description:</h2>
-    <p>{{ gameStore.game.about_the_game }}</p>
+    <p>{{ game.about_the_game }}</p>
     <h2>Screenshots:</h2>
     <div class="screenshots">
-      <img class="screenshot" v-for="gameScreenshot in gameStore.game.screenshots" :src="gameScreenshot" alt="screenshot" />
+      <img class="screenshot" v-for="gameScreenshot in game.screenshots" :src="gameScreenshot" alt="screenshot" />
     </div>
   </div>
 </template>

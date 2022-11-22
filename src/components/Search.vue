@@ -18,8 +18,7 @@ export default {
 
     },
     showGame(game: Game) {
-      router.push(`/game/${game.name}`);
-      this.gameStore.game = game;
+      router.push(`/game/${game.id}`);
     }
   }
 }

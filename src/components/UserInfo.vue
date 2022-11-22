@@ -22,7 +22,13 @@ export default {
   <div class="user-info-container" v-if="user !== undefined">
     <h2>Avatar:</h2>
     <div class="avatar-container">
-      <img class="avatar" :src="user.avatar === '' ? defaultAvatar : user.avatar" alt="profile picture">
+      <img class="avatar" 
+        :src="user.avatar === '' 
+          || user.avatar === null 
+          ? defaultAvatar 
+          : user.avatar" 
+        alt="profile picture"
+      >
     </div>
     <h2>Username:</h2>
     <p>{{user.name}}</p>

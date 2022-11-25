@@ -24,7 +24,8 @@ export default {
         .post("http://localhost:8080/api/game", {
           "game_id": game.id,
           "user_id": getId(),
-          "status": status
+          "status": status,
+          "image": game.header_image
         },
         {
           headers: {

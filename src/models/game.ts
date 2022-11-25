@@ -41,4 +41,5 @@ export interface Game {
   peak_ccu: number;
   tags: string[];
   id: number;
+  status: string;
 }

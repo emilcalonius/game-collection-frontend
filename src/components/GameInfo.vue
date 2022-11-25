@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       game: {} as Game,
-      client: new MeiliSearch({ host: 'http://localhost:7700'}),
+      client: new MeiliSearch({ host: 'http://localhost:7700'})
     }
   },
   async mounted() {

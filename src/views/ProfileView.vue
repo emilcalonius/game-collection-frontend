@@ -7,17 +7,15 @@ import {isLoggedIn, getToken} from '../utils/jwtUtil';
 
 export default {
   async mounted() {
+    let token;
     if(isLoggedIn()) {
-      const token = getToken();
-      if(typeof token === "string") {
-        this.token = token;
-      }
+      token = getToken();
     }
     let user;
     await axios
       .get("http://localhost:8080/api/user", {
         headers: {
-          "Authorization": `Bearer ${this.token}`
+          "Authorization": `Bearer ${token}`
         }
       })
       .then(res => user = res.data)
@@ -32,7 +30,6 @@ export default {
 },
   data() {
     return {
-      token: "",
       user: {},
       showEdit: false
     }

@@ -1,9 +1,9 @@
 export interface Game {
   name: string;
-  release_date:string;
+  release_date: string;
   required_age: number;
   price: number
-  dlc_count:number
+  dlc_count: number
   detailed_description: string;
   about_the_game:string;
   short_description: string;

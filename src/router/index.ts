@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import ProfileView from '../views/ProfileView.vue'
-import GameView from '../views/GameView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import LoginView from '../views/LoginView.vue';
+import RegisterView from '../views/RegisterView.vue';
+import ProfileView from '../views/ProfileView.vue';
+import GameView from '../views/GameView.vue';
+import CollectionView from '../views/CollectionView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/game/:id',
       name: 'game',
       component: GameView
+    },
+    {
+      path: '/collection',
+      name: 'collection',
+      component: CollectionView
     }
   ]
 })

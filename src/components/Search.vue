@@ -2,6 +2,8 @@
 import router from "@/router";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { useGameStore } from "@/stores/game";
+import { isLoggedIn, getId, getToken } from "@/utils/jwtUtil";
+import axios from "axios";
 
 import type { Game } from '../models/game';
 
@@ -14,11 +16,28 @@ export default {
     }
   },
   methods: {
-    addGame(game: Game) {
-
+    addGame(game: Game, status: string) {
+      let token;
+      if(isLoggedIn())
+        token = getToken();
+      axios
+        .post("http://localhost:8080/api/game", {
+          "game_id": game.id,
+          "user_id": getId(),
+          "status": status
+        },
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        .catch(err => console.log(err))
     },
     showGame(game: Game) {
       router.push(`/game/${game.id}`);
+    },
+    isLoggedIn() {
+      return isLoggedIn();
     }
   }
 }
@@ -38,8 +57,11 @@ export default {
           <img :src="item.header_image" alt="game-header-image" />
           <h2 class="game-name">{{ item.name }}</h2>
         </div>
-        <button @click="addGame(item)">+</button>
-      </template>
+        <div class="buttons">
+          <button v-if="isLoggedIn()" @click="addGame(item, 'owned')">Add</button>
+          <button v-if="isLoggedIn()" @click="addGame(item, 'wishlisted')">Wishlist</button>
+        </div>
+        </template>
     </ais-hits>
   </ais-instant-search>
 </template>
@@ -98,6 +120,13 @@ img {
   cursor: pointer;
   border-radius: 10px;
   padding: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 @media (hover: hover) {

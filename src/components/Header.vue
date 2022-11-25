@@ -12,6 +12,7 @@ function logout() {
   <div class="header-container">
     <div>
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink v-if="isLoggedIn()" to="/collection">Collection</RouterLink>
       <RouterLink v-if="isLoggedIn()" to="/profile">Profile</RouterLink>
     </div>
     <div>

@@ -74,8 +74,12 @@ export default {
 }
 
 .ais-InstantSearch {
-  max-height: 300px;
-  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 25rem;
+  max-width: 30rem;
 }
 
 .ais-SearchBox-input {

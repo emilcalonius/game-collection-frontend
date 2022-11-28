@@ -1,18 +1,42 @@
 <script lang="ts">
 import router from "@/router";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
-import { useGameStore } from "@/stores/game";
 import { isLoggedIn, getId, getToken } from "@/utils/jwtUtil";
 import axios from "axios";
 
 import type { Game } from '../models/game';
 
 export default {
+  async mounted() {
+    let token;
+      if(isLoggedIn())
+        token = getToken();
+      let games = [] as any[];
+      await axios
+        .get("http://localhost:8080/api/game", {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        .then(res => games = res.data)
+        .catch(error => console.log(error));
+      let ownedGameIds = [] as number[];
+      let wishlistedGameIds = [] as number[];
+      games.forEach(game => {
+        if(["owned", "completed"].includes(game.status)) ownedGameIds.push(game.game_id);
+        if(game.status === "wishlisted") wishlistedGameIds.push(game.game_id);
+      });
+    this.ownedGameIds = ownedGameIds;
+    this.wishlistedGameIds = wishlistedGameIds;
+    console.log(ownedGameIds);
+    console.log(wishlistedGameIds);
+  },
   data() {
     return {
       client: instantMeiliSearch("http://localhost:7700"),
       searchTerm: "",
-      gameStore: useGameStore()
+      ownedGameIds: [] as number[],
+      wishlistedGameIds: [] as number[]
     }
   },
   methods: {
@@ -20,6 +44,11 @@ export default {
       let token;
       if(isLoggedIn())
         token = getToken();
+
+      if(["owned", "completed"].includes(status)) this.ownedGameIds.push(game.id);
+      if(status === "wishlisted") this.wishlistedGameIds.push(game.id);
+      console.log(this.ownedGameIds);
+      console.log(this.wishlistedGameIds);
       axios
         .post("http://localhost:8080/api/game", {
           "game_id": game.id,
@@ -58,11 +87,26 @@ export default {
           <img :src="item.header_image" alt="game-header-image" />
           <h2 class="game-name">{{ item.name }}</h2>
         </div>
-        <div class="buttons">
-          <button class="add-btn" v-if="isLoggedIn()" @click="addGame(item, 'owned')">Add</button>
-          <button class="wishlist-btn" v-if="isLoggedIn()" @click="addGame(item, 'wishlisted')">Wishlist</button>
+        <div class="buttons" v-if="isLoggedIn()">
+          <button 
+            v-if="!ownedGameIds.includes(parseInt(item.id))" 
+            class="add-btn" 
+            @click="addGame(item, 'owned')"
+          >
+            Add
+          </button>
+          <button v-else class="add-btn disabled">Add</button>
+          <button
+            v-if="!wishlistedGameIds.includes(parseInt(item.id)) 
+              && !ownedGameIds.includes(parseInt(item.id))"
+            class="wishlist-btn"
+            @click="addGame(item, 'wishlisted')"
+          >
+            Wishlist
+          </button>
+          <button v-else class="wishlist-btn disabled">Wishlist</button>
         </div>
-        </template>
+      </template>
     </ais-hits>
   </ais-instant-search>
 </template>
@@ -71,6 +115,10 @@ export default {
 .add-btn, .wishlist-btn {
   padding: 7px;
   font-size: 1.2rem;
+}
+
+.disabled {
+  background-color: lightslategray;
 }
 
 .ais-InstantSearch {
@@ -149,6 +197,11 @@ img {
 @media (hover: hover) {
   .game-info:hover {
     background-color: #363636;
+  }
+
+  .disabled:hover {
+    cursor: default;
+    background-color: lightslategray;
   }
 }
 </style>

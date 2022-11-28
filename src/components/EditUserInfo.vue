@@ -68,6 +68,7 @@ export default {
   background-color: transparent;
   border: 0;
   color: hsla(160, 100%, 37%, 1);
+  width: 7rem;
 }
 
 @media(hover: hover) {

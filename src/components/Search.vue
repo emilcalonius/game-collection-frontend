@@ -44,9 +44,9 @@ export default {
       let token;
       if(isLoggedIn())
         token = getToken();
-
-      if(["owned", "completed"].includes(status)) this.ownedGameIds.push(game.id);
-      if(status === "wishlisted") this.wishlistedGameIds.push(game.id);
+      console.log(typeof game.id)
+      if(["owned", "completed"].includes(status)) this.ownedGameIds.push(parseInt(game.id));
+      if(status === "wishlisted") this.wishlistedGameIds.push(parseInt(game.id));
       console.log(this.ownedGameIds);
       console.log(this.wishlistedGameIds);
       axios
@@ -80,6 +80,7 @@ export default {
   >
     <ais-search-box 
       v-model="searchTerm" 
+      placeholder="Search for games..."
     />
     <ais-hits v-if="searchTerm !== ''">
       <template v-slot:item="{ item }">

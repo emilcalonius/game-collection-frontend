@@ -40,6 +40,6 @@ export interface Game {
   median_playtime_2weeks: number;
   peak_ccu: number;
   tags: string[];
-  id: number;
+  id: string;
   status: string;
 }

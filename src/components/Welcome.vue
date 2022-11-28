@@ -19,7 +19,7 @@ export default {
 
 <template>
   <p v-if="isLoggedIn()">Hello, {{getName()}}! 🎮</p>
-  <p v-if="!isLoggedIn()">Not logged in</p>
+  <p v-if="!isLoggedIn()">Log in to build your collection!</p>
 </template>
 
 <style scoped>

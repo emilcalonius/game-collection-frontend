@@ -59,8 +59,8 @@ export default {
           <h2 class="game-name">{{ item.name }}</h2>
         </div>
         <div class="buttons">
-          <button v-if="isLoggedIn()" @click="addGame(item, 'owned')">Add</button>
-          <button v-if="isLoggedIn()" @click="addGame(item, 'wishlisted')">Wishlist</button>
+          <button class="add-btn" v-if="isLoggedIn()" @click="addGame(item, 'owned')">Add</button>
+          <button class="wishlist-btn" v-if="isLoggedIn()" @click="addGame(item, 'wishlisted')">Wishlist</button>
         </div>
         </template>
     </ais-hits>
@@ -68,9 +68,21 @@ export default {
 </template>
 
 <style>
+.add-btn, .wishlist-btn {
+  padding: 7px;
+  font-size: 1.2rem;
+}
+
 .ais-InstantSearch {
   max-height: 300px;
   max-width: 500px;
+}
+
+.ais-SearchBox-input {
+  width: 20rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  border-radius: 10px;
 }
 
 .ais-Hits {
@@ -82,8 +94,8 @@ export default {
   gap: 1rem;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 300px;
-  width: 500px;
+  max-height: 20rem;
+  width: max-content;
   background-color: #303030;
   padding: 1rem;
   border-radius: 10px;

@@ -88,14 +88,16 @@ export default {
 }
 
 input {
-  width: 20rem;
+  width: 25rem;
   border-radius: 10px;
-  height: 2rem;
+  height: 3rem;
+  font-size: 1.5rem;
 }
 
 textarea {
-  width: 20rem;
+  width: 25rem;
   border-radius: 10px;
+  font-size: 1.5rem;
 }
 
 button {

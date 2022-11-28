@@ -47,7 +47,7 @@ export default {
 }
 
 button {
-  width: 5rem;
+  width: 10rem;
 }
 
 .avatar {

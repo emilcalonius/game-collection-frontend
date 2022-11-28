@@ -86,7 +86,7 @@ export default {
     </div>
 
     <div class="section">
-      <h2>Wishlisted games:</h2>
+      <h2>Completed games:</h2>
       <div class="drawer">
         <div class="game no-game" v-if="completed.length === 0">No games here yet!</div>
         <div v-for="game in completed" class="game">

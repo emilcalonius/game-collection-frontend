@@ -18,6 +18,12 @@ export default {
 </script>
 
 <template>
-  <p v-if="isLoggedIn()">Hello, {{getName()}}!</p>
+  <p v-if="isLoggedIn()">Hello, {{getName()}}! 🎮</p>
   <p v-if="!isLoggedIn()">Not logged in</p>
 </template>
+
+<style scoped>
+p {
+  font-size: 2rem;
+}
+</style>

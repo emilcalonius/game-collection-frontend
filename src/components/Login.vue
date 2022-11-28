@@ -51,18 +51,19 @@ export default {
 .login-form, form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
 
 input {
-  width: 10rem;
+  width: 20rem;
   border-radius: 10px;
-  height: 2rem;
+  height: 3rem;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 button {
-  width: 4rem;
+  width: 10rem;
 }
 
 .register {
@@ -71,5 +72,6 @@ button {
 
 .error {
   color: red;
+  font-size: 1.5rem;
 }
 </style>

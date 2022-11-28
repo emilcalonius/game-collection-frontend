@@ -5,13 +5,19 @@ import Header from '../components/Header.vue';
 </script>
 
 <template>
-  <main>
-    <Header />
+  <Header />
+  <main class="main">
     <Welcome />
     <Search />
   </main>
 </template>
 
 <style scoped>
-
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+}
 </style>

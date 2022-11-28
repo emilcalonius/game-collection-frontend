@@ -52,21 +52,23 @@ export default {
 .register-form, form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
 
 input {
-  width: 10rem;
+  width: 20rem;
   border-radius: 10px;
-  height: 2rem;
+  height: 3rem;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 button {
-  width: 5rem;
+  width: 10rem;
 }
 
 .error {
-  color: red;;
+  font-size: 1.5rem;
+  color: rgb(226, 107, 107);
 }
 </style>

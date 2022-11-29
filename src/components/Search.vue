@@ -9,27 +9,28 @@ import type { Game } from '../models/game';
 export default {
   async mounted() {
     let token;
-      if(isLoggedIn())
+      if(isLoggedIn()) {
         token = getToken();
-      let games = [] as any[];
-      await axios
-        .get("http://localhost:8080/api/game", {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-        .then(res => games = res.data)
-        .catch(error => console.log(error));
-      let ownedGameIds = [] as number[];
-      let wishlistedGameIds = [] as number[];
-      games.forEach(game => {
-        if(["owned", "completed"].includes(game.status)) ownedGameIds.push(game.game_id);
-        if(game.status === "wishlisted") wishlistedGameIds.push(game.game_id);
-      });
-    this.ownedGameIds = ownedGameIds;
-    this.wishlistedGameIds = wishlistedGameIds;
-    console.log(ownedGameIds);
-    console.log(wishlistedGameIds);
+        let games = [] as any[];
+        await axios
+          .get("http://localhost:8080/api/game", {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .then(res => games = res.data)
+          .catch(error => console.log(error));
+        let ownedGameIds = [] as number[];
+        let wishlistedGameIds = [] as number[];
+        games.forEach(game => {
+          if(["owned", "completed"].includes(game.status)) ownedGameIds.push(game.game_id);
+          if(game.status === "wishlisted") wishlistedGameIds.push(game.game_id);
+        });
+        this.ownedGameIds = ownedGameIds;
+        this.wishlistedGameIds = wishlistedGameIds;
+        console.log(ownedGameIds);
+        console.log(wishlistedGameIds);
+      }
   },
   data() {
     return {
@@ -44,17 +45,36 @@ export default {
       let token;
       if(isLoggedIn())
         token = getToken();
-      console.log(typeof game.id)
-      if(["owned", "completed"].includes(status)) this.ownedGameIds.push(parseInt(game.id));
+
+      if(["owned", "completed"].includes(status)) {
+        // If adding wishlisted game as owned or completed, remove from wishlisted list,
+        // add to owned list and update game through API
+        if(this.wishlistedGameIds.includes(parseInt(game.id))) {
+          this.wishlistedGameIds = this.wishlistedGameIds.filter(gameId => gameId != parseInt(game.id));
+          this.ownedGameIds.push(parseInt(game.id));
+          axios
+            .patch("http://localhost:8080/api/game", {
+              "game_id": game.id,
+              "user_id": getId(),
+              "status": status
+            },
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            })
+            .catch(err => console.log(err));
+          return;
+        }
+        this.ownedGameIds.push(parseInt(game.id));
+      } 
       if(status === "wishlisted") this.wishlistedGameIds.push(parseInt(game.id));
-      console.log(this.ownedGameIds);
-      console.log(this.wishlistedGameIds);
+
       axios
         .post("http://localhost:8080/api/game", {
           "game_id": game.id,
           "user_id": getId(),
-          "status": status,
-          "image": game.header_image
+          "status": status
         },
         {
           headers: {

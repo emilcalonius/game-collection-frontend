@@ -19,7 +19,6 @@ export default {
       .then(res => games = res.data)
       .catch(error => console.log(error));
     
-    console.log(games);
     let meiliGames = [] as Game[];
     games.forEach(async (game) => {
       await this.client
@@ -33,7 +32,6 @@ export default {
         .catch(err => console.log(err));
     });
     setTimeout(() => {
-      console.log(meiliGames);
       this.games = meiliGames;
     }, games.length * 30)
   },

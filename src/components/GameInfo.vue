@@ -17,8 +17,44 @@ export default {
       .getDocument(gameId)
       .then(res => game = res as Game)
       .catch(err => console.log(err));
-    if(game !== undefined)
-    this.game = game;
+    if(game !== undefined) {
+      this.game = game;
+      setTimeout(function() {
+        // Show scroll buttons if content overflows
+        const container = document.getElementById("screenshots");
+        if(container?.scrollWidth! > container?.clientWidth!) {
+          const scrollButton: HTMLElement = container?.lastElementChild as HTMLElement;
+          scrollButton.style.display = "block";
+        }
+      }, 200);
+    }
+  },
+  methods: {
+    scrollScreenshots(event: MouseEvent, direction: string) {
+      const button: HTMLElement = event.target as HTMLElement;
+      const container = button.parentElement;
+      let amount = 0;
+      if(direction === 'back') amount = -500;
+      if(direction === 'forward') amount = 500;
+      container?.scrollBy({
+        left: amount,
+        behavior: 'smooth'
+      });
+      if(button.classList.contains("scroll-btn-right")) {
+        if(container?.scrollLeft! + amount + container?.offsetWidth! >= container?.scrollWidth!) {
+          button.style.display = "none";
+        }
+        const otherButton: HTMLElement = button.parentElement?.firstElementChild as HTMLElement;
+        otherButton.style.display = "block";
+      }
+      if(button.classList.contains("scroll-btn-left")) {
+        if(container?.scrollLeft! + amount <= 0) {
+          button.style.display = "none";
+        }
+        const otherButton: HTMLElement = button.parentElement?.lastElementChild as HTMLElement;
+        otherButton.style.display = "block";
+      }
+    },
   }
 }
 </script>
@@ -55,8 +91,10 @@ export default {
     <h2>Description:</h2>
     <p>{{ game.about_the_game }}</p>
     <h2>Screenshots:</h2>
-    <div class="screenshots">
+    <div class="screenshots" id="screenshots">
+      <button class="scroll-btn scroll-btn-left" @click="(event) => scrollScreenshots(event, 'back')">&lt;</button>
       <img class="screenshot" v-for="gameScreenshot in game.screenshots" :src="gameScreenshot" alt="screenshot" />
+      <button class="scroll-btn scroll-btn-right" @click="(event) => scrollScreenshots(event, 'forward')">></button>
     </div>
   </div>
 </template>
@@ -86,6 +124,7 @@ export default {
   gap: 1rem;
   overflow-x: scroll;
   padding-bottom: 1rem;
+  align-items: center;
 }
 
 .screenshot {
@@ -94,5 +133,20 @@ export default {
 
 .header-img {
   width: 20rem;
+}
+
+.scroll-btn {
+  position: sticky;
+  z-index: 2;
+  height: 5rem;
+  display: none;
+}
+
+.scroll-btn-right {
+  right: 0.5rem;
+}
+
+.scroll-btn-left {
+  left: 0.5rem;
 }
 </style>

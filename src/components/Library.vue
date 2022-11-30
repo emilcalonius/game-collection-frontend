@@ -79,8 +79,6 @@ export default {
         left: amount,
         behavior: 'smooth'
       });
-      console.log("scrollLeft: " + drawer?.scrollLeft);
-      console.log("scrollWidth: " + drawer?.scrollWidth);
       if(button.classList.contains("scroll-btn-right")) {
         if(drawer?.scrollLeft! + amount + drawer?.offsetWidth! >= drawer?.scrollWidth!) {
           button.style.display = "none";
@@ -170,7 +168,6 @@ export default {
   gap: 2rem;
   padding-bottom: 1rem;
   width: 100%;
-  padding-left: -1rem;
 }
 
 .game {
@@ -209,10 +206,10 @@ export default {
 
 .scroll-btn {
   position: sticky;
-  margin-top: 2rem;
   z-index: 2;
   height: 5rem;
   display: none;
+  margin-top: 1rem;
 }
 
 .scroll-btn-right {

@@ -25,9 +25,7 @@ export default {
         .catch(err => console.log(err));
       const currentGame = games.find(item => item.game_id == this.game.id);
       this.currentGame = currentGame;
-      if(currentGame.status === "completed") {
-        this.completed = true;
-      }
+      this.completed = currentGame.completed;
       document.querySelectorAll(".star").forEach((star, index) => {
         if(index < currentGame.rating) {
           star.classList.add("active");
@@ -64,6 +62,25 @@ export default {
         })
         .then(res => console.log(res))
         .catch(err => console.log(err));
+    },
+    handleCompletedClick() {
+      this.completed = !this.completed;
+      axios
+        .patch("http://localhost:8080/api/game", {
+          "id": this.currentGame.id,
+          "rating": this.currentGame.rating,
+          "user_id": getId(),
+          "status": this.currentGame.status,
+          "completed": this.completed,
+          "game_id": this.currentGame.game_id
+        },
+        {
+          headers: {
+            "Authorization": `Bearer ${getToken()}`
+          }
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     }
   }
 }
@@ -83,8 +100,8 @@ export default {
     </div>
     <div class="completed">
       <h3>Completed:</h3>
-      <img v-if="!completed" class="checkbox" src="../assets/images/checkbox_empty.svg" alt="checkbox" />
-      <img v-if="completed" class="checkbox" src="../assets/images/checkbox_checked.svg" alt="checkbox" />
+      <img @click="handleCompletedClick()" v-if="!completed" class="checkbox" src="../assets/images/checkbox_empty.svg" alt="checkbox" />
+      <img @click="handleCompletedClick()" v-if="completed" class="checkbox" src="../assets/images/checkbox_checked.svg" alt="checkbox" />
     </div>
   </div>
 </template>

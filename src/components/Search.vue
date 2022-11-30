@@ -53,7 +53,7 @@ export default {
           .then(res => this.games = res.data)
           .catch(error => console.log(error));
 
-      if(["owned", "completed"].includes(status)) {
+      if(status === "owned") {
         // If adding wishlisted game as owned or completed, remove from wishlisted list,
         // add to owned list and update game through API
         if(this.wishlistedGameIds.includes(parseInt(game.id))) {

@@ -32,6 +32,7 @@ export default {
         .getDocument(game.game_id)
         .then(res => {
           res.status = game.status;
+          res.completed = game.completed;
           meiliGames.push(res as Game);
         })
         .catch(err => console.log(err));
@@ -65,7 +66,7 @@ export default {
       return this.games.filter(game => game.status === "wishlisted");
     },
     completed: function() {
-      return this.games.filter(game => game.status === "completed");
+      return this.games.filter(game => game.completed === true);
     }
   },
   methods: {

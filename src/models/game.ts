@@ -42,4 +42,5 @@ export interface Game {
   tags: string[];
   id: string;
   status: string;
+  completed: boolean;
 }

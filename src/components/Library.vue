@@ -3,6 +3,7 @@ import axios from 'axios';
 import { isLoggedIn, getToken } from '@/utils/jwtUtil';
 import type { Game } from '@/models/game';
 import MeiliSearch from 'meilisearch';
+import router from '@/router';
 
 export default {
   async mounted() {
@@ -32,12 +33,12 @@ export default {
         .then(res => {
           res.status = game.status;
           meiliGames.push(res as Game);
-          this.loading = false;
         })
         .catch(err => console.log(err));
     });
     setTimeout(() => {
       this.games = meiliGames;
+      this.loading = false;
     }, games.length * 30);
     setTimeout(function() {
       // Show scroll buttons if content overflows
@@ -94,7 +95,10 @@ export default {
         const otherButton: HTMLElement = button.parentElement?.lastElementChild as HTMLElement;
         otherButton.style.display = "block";
       }
-    }
+    },
+    showGame(game: Game) {
+      router.push(`/game/${game.id}`);
+    },
   }
 }
 </script>
@@ -105,10 +109,11 @@ export default {
     <div class="section">
       <h2>Owned games:</h2>
       <div class="drawer">
-        <div class="game no-game" v-if="owned.length === 0">No games here yet...</div>
+        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="">
+        <div v-else class="game no-game" v-if="owned.length === 0">No games here yet...</div>
         <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
         <div v-for="game in owned" class="game">
-          <img class="game-header" :src="game.header_image" alt="game header image">
+          <img class="game-header" :src="game.header_image" alt="game header image" @click="showGame(game)">
           <p class="game-name">{{ game.name }}</p>
         </div>
         <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">></button>
@@ -118,10 +123,11 @@ export default {
     <div class="section">
       <h2>Wishlisted games:</h2>
       <div class="drawer">
-        <div class="game no-game" v-if="wishlisted.length === 0">No games here yet...</div>
+        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="">
+        <div v-else class="game no-game" v-if="wishlisted.length === 0">No games here yet...</div>
         <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
         <div v-for="game in wishlisted" class="game">
-          <img class="game-header" :src="game.header_image" alt="game header image">
+          <img class="game-header" :src="game.header_image" alt="game header image" @click="showGame(game)">
           <p class="game-name">{{ game.name }}</p>
         </div>
         <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">></button>
@@ -131,10 +137,11 @@ export default {
     <div class="section">
       <h2>Completed games:</h2>
       <div class="drawer">
-        <div class="game no-game" v-if="completed.length === 0">No games here yet...</div>
+        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="">
+        <div v-else class="game no-game" v-if="completed.length === 0">No games here yet...</div>
         <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
         <div v-for="game in completed" class="game">
-          <img class="game-header" :src="game.header_image" alt="game header image">
+          <img class="game-header" :src="game.header_image" alt="game header image" @click="showGame(game)">
           <p class="game-name">{{ game.name }}</p>
         </div>
         <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">></button>
@@ -147,6 +154,10 @@ export default {
 </template>
 
 <style scoped>
+.loading {
+  width: 5rem;
+}
+
 .library-container {
   display: flex;
   flex-direction: column;

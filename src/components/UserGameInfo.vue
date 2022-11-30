@@ -23,14 +23,21 @@ export default {
         })
         .then(res => games = res.data)
         .catch(err => console.log(err));
-      const currentGame = games.find(item => item.game_id == this.game.id);
-      this.currentGame = currentGame;
-      this.completed = currentGame.completed;
-      document.querySelectorAll(".star").forEach((star, index) => {
-        if(index < currentGame.rating) {
-          star.classList.add("active");
-        }
-      })
+      if(games.length !== 0) {
+        console.log("hello")
+        const currentGame = games.find(item => item.game_id == this.game.id);
+        this.currentGame = currentGame;
+        this.completed = currentGame.completed;
+        setTimeout(function() {
+          document.querySelectorAll(".star").forEach((star, index) => {
+            console.log(index)
+            if(index < currentGame.rating) {
+              console.log("hello ag")
+              star.classList.add("active");
+            }
+          })
+        }, 1);
+      }
     }
   },
   methods: {
@@ -87,8 +94,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="!isLoggedIn()"></div>
-  <div v-else class="user-info">
+  <div v-if="isLoggedIn() && Object.keys(currentGame).length > 0 && currentGame.status === 'owned'" class="user-info">
     <div class="rating">
       <h3>Rating:</h3>
       <div class="stars">
@@ -105,9 +111,20 @@ export default {
       <img @click="handleCompletedClick()" v-if="completed" class="checkbox" src="../assets/images/checkbox_checked.svg" alt="checkbox" />
     </div>
   </div>
+  <div v-if="isLoggedIn() && Object.keys(currentGame).length > 0 && currentGame.status === 'wishlisted'" class="wishlisted">
+    <h2>🌠 On your wishlist</h2>
+  </div>
 </template>
 
 <style scoped>
+.wishlisted {
+  background-color: #363636;
+  padding: 0.5rem;
+  padding-right: 1rem;
+  border-radius: 20px;
+  width: max-content;
+}
+
 .stars {
   display: flex;
 }

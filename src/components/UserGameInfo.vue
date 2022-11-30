@@ -87,7 +87,8 @@ export default {
 </script>
 
 <template>
-  <div class="user-info">
+  <div v-if="!isLoggedIn()"></div>
+  <div v-else class="user-info">
     <div class="rating">
       <h3>Rating:</h3>
       <div class="stars">

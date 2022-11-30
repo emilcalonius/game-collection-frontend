@@ -11,18 +11,17 @@ export default {
     let token;
       if(isLoggedIn()) {
         token = getToken();
-        let games = [] as any[];
         await axios
           .get("http://localhost:8080/api/game", {
             headers: {
               "Authorization": `Bearer ${token}`
             }
           })
-          .then(res => games = res.data)
+          .then(res => this.games = res.data)
           .catch(error => console.log(error));
         let ownedGameIds = [] as number[];
         let wishlistedGameIds = [] as number[];
-        games.forEach(game => {
+        this.games.forEach(game => {
           if(["owned", "completed"].includes(game.status)) ownedGameIds.push(game.game_id);
           if(game.status === "wishlisted") wishlistedGameIds.push(game.game_id);
         });
@@ -34,15 +33,25 @@ export default {
     return {
       client: instantMeiliSearch("http://localhost:7700"),
       searchTerm: "",
+      games: [] as any[],
       ownedGameIds: [] as number[],
       wishlistedGameIds: [] as number[]
     }
   },
   methods: {
-    addGame(game: Game, status: string) {
+    async addGame(game: Game, status: string) {
       let token;
       if(isLoggedIn())
         token = getToken();
+
+        await axios
+          .get("http://localhost:8080/api/game", {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .then(res => this.games = res.data)
+          .catch(error => console.log(error));
 
       if(["owned", "completed"].includes(status)) {
         // If adding wishlisted game as owned or completed, remove from wishlisted list,
@@ -50,8 +59,13 @@ export default {
         if(this.wishlistedGameIds.includes(parseInt(game.id))) {
           this.wishlistedGameIds = this.wishlistedGameIds.filter(gameId => gameId != parseInt(game.id));
           this.ownedGameIds.push(parseInt(game.id));
+          console.log(game.id)
+          console.log(this.games)
+          let id = this.games.find(item => item.game_id == game.id).id;
+          console.log(id)
           axios
             .patch("http://localhost:8080/api/game", {
+              "id": id,
               "game_id": game.id,
               "user_id": getId(),
               "status": status
@@ -79,7 +93,7 @@ export default {
             "Authorization": `Bearer ${token}`
           }
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     },
     showGame(game: Game) {
       router.push(`/game/${game.id}`);

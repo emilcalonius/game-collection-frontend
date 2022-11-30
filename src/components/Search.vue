@@ -59,16 +59,15 @@ export default {
         if(this.wishlistedGameIds.includes(parseInt(game.id))) {
           this.wishlistedGameIds = this.wishlistedGameIds.filter(gameId => gameId != parseInt(game.id));
           this.ownedGameIds.push(parseInt(game.id));
-          console.log(game.id)
-          console.log(this.games)
           let id = this.games.find(item => item.game_id == game.id).id;
-          console.log(id)
           axios
             .patch("http://localhost:8080/api/game", {
               "id": id,
               "game_id": game.id,
               "user_id": getId(),
-              "status": status
+              "status": status,
+              "completed": false,
+              "rating": 0
             },
             {
               headers: {

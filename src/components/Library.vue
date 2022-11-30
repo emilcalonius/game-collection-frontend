@@ -107,7 +107,7 @@ export default {
     <div class="section">
       <h2>Owned games:</h2>
       <div class="drawer">
-        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="">
+        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="loading gif">
         <div v-else class="game no-game" v-if="owned.length === 0">No games here yet...</div>
         <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
         <div v-for="game in owned" class="game">
@@ -121,7 +121,7 @@ export default {
     <div class="section">
       <h2>Wishlisted games:</h2>
       <div class="drawer">
-        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="">
+        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="loading gif">
         <div v-else class="game no-game" v-if="wishlisted.length === 0">No games here yet...</div>
         <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
         <div v-for="game in wishlisted" class="game">
@@ -135,7 +135,7 @@ export default {
     <div class="section">
       <h2>Completed games:</h2>
       <div class="drawer">
-        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="">
+        <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="loading gif">
         <div v-else class="game no-game" v-if="completed.length === 0">No games here yet...</div>
         <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
         <div v-for="game in completed" class="game">

@@ -1,12 +1,15 @@
 <script lang="ts">
 import type { Game } from '@/models/game';
 import MeiliSearch from 'meilisearch';
+import UserGameInfo from './UserGameInfo.vue';
 
 export default {
   data() {
     return {
       game: {} as Game,
-      client: new MeiliSearch({ host: 'http://localhost:7700'})
+      client: new MeiliSearch({ host: 'http://localhost:7700'}),
+      rating: 0,
+      completed: false
     }
   },
   async mounted() {
@@ -54,7 +57,10 @@ export default {
         const otherButton: HTMLElement = button.parentElement?.lastElementChild as HTMLElement;
         otherButton.style.display = "block";
       }
-    },
+    }
+  },
+  components: {
+    UserGameInfo
   }
 }
 </script>
@@ -63,6 +69,7 @@ export default {
   <p v-if="Object.keys(game).length === 0">Game not found!</p>
   <div v-else class="container">
     <img class="header-img" :src="game.header_image" alt="">
+    <UserGameInfo :game="game" />
     <h1>{{ game.name }}</h1>
     <div class="devs">
       <div class="developers">

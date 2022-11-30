@@ -13,7 +13,7 @@
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: rgb(0, 255, 215);
   transition: 0.4s;
   padding: 10px;
   font-size: 1.5rem;
@@ -21,7 +21,7 @@ a,
 }
 
 button {
-  background-color: hsla(160, 100%, 37%, 1);
+  background-color: rgb(0, 255, 215);
   color: var(--vt-c-black);
   padding: 5px;
   cursor: pointer;
@@ -57,11 +57,11 @@ button {
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: rgba(0, 189, 161, 0.096);
   }
 
   button:hover {
-    background-color: hsla(160, 96%, 46%, 0.596);
+    background-color: rgb(0, 189, 160);
   }
 }
 

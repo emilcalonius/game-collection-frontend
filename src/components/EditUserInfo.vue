@@ -67,13 +67,13 @@ export default {
   border-radius: 0;
   background-color: transparent;
   border: 0;
-  color: hsla(160, 100%, 37%, 1);
+  color: rgb(0, 189, 160);
   width: 7rem;
 }
 
 @media(hover: hover) {
   .cancel:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: rgba(0, 189, 161, 0.096);
   }
 }
 

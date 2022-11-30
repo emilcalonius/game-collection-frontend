@@ -18,7 +18,11 @@ export default {
       })
       .then(res => games = res.data)
       .catch(error => console.log(error));
-    
+
+    if(games.length === 0) {
+      this.loading = false;
+      return;
+    }
     let meiliGames = [] as Game[];
     games.forEach(async (game) => {
       await this.client
@@ -64,7 +68,7 @@ export default {
     <div class="section">
       <h2>Owned games:</h2>
       <div class="drawer">
-        <div class="game no-game" v-if="owned.length === 0">No games here yet!</div>
+        <div class="game no-game" v-if="owned.length === 0">No games here yet...</div>
         <div v-for="game in owned" class="game">
           <img :src="game.header_image" alt="game header image">
           <p>{{ game.name }}</p>
@@ -75,7 +79,7 @@ export default {
     <div class="section">
       <h2>Wishlisted games:</h2>
       <div class="drawer">
-        <div class="game no-game" v-if="wishlisted.length === 0">No games here yet!</div>
+        <div class="game no-game" v-if="wishlisted.length === 0">No games here yet...</div>
         <div v-for="game in wishlisted" class="game">
           <img :src="game.header_image" alt="game header image">
           <p>{{ game.name }}</p>
@@ -86,7 +90,7 @@ export default {
     <div class="section">
       <h2>Completed games:</h2>
       <div class="drawer">
-        <div class="game no-game" v-if="completed.length === 0">No games here yet!</div>
+        <div class="game no-game" v-if="completed.length === 0">No games here yet...</div>
         <div v-for="game in completed" class="game">
           <img :src="game.header_image" alt="game header image">
           <p>{{ game.name }}</p>

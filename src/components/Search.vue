@@ -28,8 +28,6 @@ export default {
         });
         this.ownedGameIds = ownedGameIds;
         this.wishlistedGameIds = wishlistedGameIds;
-        console.log(ownedGameIds);
-        console.log(wishlistedGameIds);
       }
   },
   data() {

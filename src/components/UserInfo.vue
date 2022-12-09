@@ -1,5 +1,6 @@
 <script lang="ts">
 import defaultAvatar from '../assets/images/blank_avatar.png';
+import router from '@/router';
 
 export default {
   props: {
@@ -7,7 +8,7 @@ export default {
   },
   methods: {
     clickEditButton() {
-      this.$emit('click-show-edit', true);
+      router.push("/profile/edit");
     }
   },
   data() {

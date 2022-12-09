@@ -1,6 +1,7 @@
 <script lang="ts">
 import axios from 'axios';
 import { isLoggedIn, getToken } from '@/utils/jwtUtil';
+import router from '@/router';
 
 export default {
   props: {
@@ -9,7 +10,7 @@ export default {
   methods: {
     clickCancelButton(e: MouseEvent) {
       e.preventDefault();
-      this.$emit('click-show-edit', false);
+      router.push("/profile");
     },
     async clickSaveButton(e: MouseEvent) {
       e.preventDefault();
@@ -31,8 +32,7 @@ export default {
         .then(res => console.log(res))
         .catch(error => console.log(error));
 
-      this.$emit('click-show-edit', false);
-      window.location.reload();
+      router.push("/profile");
     }
   },
   data() {

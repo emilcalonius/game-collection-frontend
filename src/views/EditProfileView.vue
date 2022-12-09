@@ -1,5 +1,5 @@
 <script lang="ts">
-import UserInfo from '@/components/UserInfo.vue';
+import EditUserInfo from '@/components/EditUserInfo.vue';
 import Header from '../components/Header.vue';
 import axios from 'axios';
 import {isLoggedIn, getToken} from '../utils/jwtUtil';
@@ -23,7 +23,7 @@ export default {
       this.user = user;
   },
   components: {
-    UserInfo,
+    EditUserInfo,
     Header
 },
   data() {
@@ -37,5 +37,5 @@ export default {
 <template>
   <Header />
   <h1>Profile</h1>
-  <UserInfo :user="user" />
+  <EditUserInfo :user="user" />
 </template>

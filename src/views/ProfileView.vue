@@ -13,7 +13,7 @@ export default {
     }
     let user;
     await axios
-      .get("http://localhost:8080/api/user", {
+      .get(import.meta.env.VITE_BACKEND_HOST + "/api/user", {
         headers: {
           "Authorization": `Bearer ${token}`
         }

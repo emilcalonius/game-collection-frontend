@@ -16,7 +16,7 @@ export default {
       token = getToken();
       let games = [] as any[];
       await axios
-        .get("http://localhost:8080/api/game", {
+        .get(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -54,7 +54,7 @@ export default {
         }
       });
       axios
-        .patch("http://localhost:8080/api/game", {
+        .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           "id": this.currentGame.id,
           "rating": rating,
           "user_id": getId(),
@@ -73,7 +73,7 @@ export default {
     handleCompletedClick() {
       this.completed = !this.completed;
       axios
-        .patch("http://localhost:8080/api/game", {
+        .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           "id": this.currentGame.id,
           "rating": this.currentGame.rating,
           "user_id": getId(),

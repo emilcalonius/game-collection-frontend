@@ -18,7 +18,7 @@ export default {
         return;
       }
       axios
-        .post("http://localhost:8080/api/auth/register", {
+        .post(import.meta.env.VITE_BACKEND_HOST + "/api/auth/register", {
           name: this.username,
           password: this.passwordOne
         })

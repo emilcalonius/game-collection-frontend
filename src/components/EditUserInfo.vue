@@ -21,7 +21,7 @@ export default {
       }
       console.log(this.token)
       await axios
-        .patch("http://localhost:8080/api/user", {
+        .patch(import.meta.env.VITE_BACKEND_HOST + "/api/user", {
           avatar: this.avatar,
           bio: this.bio,
         }, {

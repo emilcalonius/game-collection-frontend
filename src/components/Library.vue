@@ -13,7 +13,7 @@ export default {
       token = getToken();
     let games = [] as any[];
     await axios
-      .get("http://localhost:8080/api/game", {
+      .get(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -54,7 +54,10 @@ export default {
   data() {
     return {
       games: [] as Game[],
-      client: new MeiliSearch({ host: "http://localhost:7700"}),
+      client: new MeiliSearch({
+        host: import.meta.env.VITE_MEILISEARCH_HOST,
+        apiKey: import.meta.env.VITE_MEILISEARCH_KEY
+      }),
       loading: true
     }
   },

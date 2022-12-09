@@ -12,7 +12,7 @@ export default {
       if(isLoggedIn()) {
         token = getToken();
         await axios
-          .get("http://localhost:8080/api/game", {
+          .get(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
             headers: {
               "Authorization": `Bearer ${token}`
             }
@@ -31,7 +31,10 @@ export default {
   },
   data() {
     return {
-      client: instantMeiliSearch("http://localhost:7700"),
+      client: instantMeiliSearch(
+        import.meta.env.VITE_MEILISEARCH_HOST,
+        import.meta.env.VITE_MEILISEARCH_KEY
+      ),
       searchTerm: "",
       games: [] as any[],
       ownedGameIds: [] as number[],
@@ -45,7 +48,7 @@ export default {
         token = getToken();
 
         await axios
-          .get("http://localhost:8080/api/game", {
+          .get(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
             headers: {
               "Authorization": `Bearer ${token}`
             }
@@ -61,7 +64,7 @@ export default {
           this.ownedGameIds.push(parseInt(game.id));
           let id = this.games.find(item => item.game_id == game.id).id;
           axios
-            .patch("http://localhost:8080/api/game", {
+            .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
               "id": id,
               "game_id": game.id,
               "user_id": getId(),
@@ -82,7 +85,7 @@ export default {
       if(status === "wishlisted") this.wishlistedGameIds.push(parseInt(game.id));
 
       axios
-        .post("http://localhost:8080/api/game", {
+        .post(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           "game_id": game.id,
           "user_id": getId(),
           "status": status

@@ -15,7 +15,7 @@ export default {
     login(e: MouseEvent) {
       e.preventDefault();
       axios
-        .post("http://localhost:8080/api/auth/login", {
+        .post(import.meta.env.VITE_BACKEND_HOST + "/api/auth/login", {
           name: this.username,
           password: this.password
         })

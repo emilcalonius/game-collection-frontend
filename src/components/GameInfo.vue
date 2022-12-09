@@ -7,7 +7,10 @@ export default {
   data() {
     return {
       game: {} as Game,
-      client: new MeiliSearch({ host: 'http://localhost:7700'}),
+      client: new MeiliSearch({
+        host: import.meta.env.VITE_MEILISEARCH_HOST, 
+        apiKey: import.meta.env.VITE_MEILISEARCH_KEY
+      }),
       rating: 0,
       completed: false
     }

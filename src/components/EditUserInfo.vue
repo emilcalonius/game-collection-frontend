@@ -19,7 +19,6 @@ export default {
           this.token = token;
         }
       }
-      console.log(this.token)
       await axios
         .patch(import.meta.env.VITE_BACKEND_HOST + "/api/user", {
           avatar: this.avatar,

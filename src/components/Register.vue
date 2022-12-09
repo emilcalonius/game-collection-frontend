@@ -23,7 +23,6 @@ export default {
           password: this.passwordOne
         })
         .then(function(response) {
-          console.log(response);
           document.cookie = "token=" + response.data["jwt-token"];
           router.push("/");
         })

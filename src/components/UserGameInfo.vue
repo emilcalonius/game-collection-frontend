@@ -24,15 +24,12 @@ export default {
         .then(res => games = res.data)
         .catch(err => console.log(err));
       if(games.length !== 0) {
-        console.log("hello")
         const currentGame = games.find(item => item.game_id == this.game.id);
         this.currentGame = currentGame;
         this.completed = currentGame.completed;
         setTimeout(function() {
           document.querySelectorAll(".star").forEach((star, index) => {
-            console.log(index)
             if(index < currentGame.rating) {
-              console.log("hello ag")
               star.classList.add("active");
             }
           })

@@ -6,7 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  //base: '/game-collection-frontend',
+  // base: '/game-collection-frontend/',
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {

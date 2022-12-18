@@ -7,7 +7,8 @@ export default {
   data() {
     return {
       currentGame: {} as any,
-      completed: false
+      completed: false,
+      rating: 0
     }
   },
   async mounted() {
@@ -41,7 +42,8 @@ export default {
     isLoggedIn() {
       return isLoggedIn();
     },
-    rateGame(rating: number) {
+    async rateGame(rating: number) {
+      this.rating = rating;
       document.querySelectorAll(".star").forEach((star, index) => {
         if(index < rating) {
           star.classList.add("active");
@@ -50,14 +52,16 @@ export default {
           star.classList.remove("active");
         }
       });
-      axios
+      await axios
         .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           "id": this.currentGame.id,
           "rating": rating,
           "user_id": getId(),
           "status": this.currentGame.status,
-          "completed": this.currentGame.completed,
-          "game_id": this.currentGame.game_id
+          "completed": this.completed,
+          "game_id": this.currentGame.game_id,
+          "header_image": this.currentGame.header_image,
+          "name": this.currentGame.name
         },
         {
           headers: {
@@ -67,16 +71,18 @@ export default {
         .then(res => console.log(res))
         .catch(err => console.log(err));
     },
-    handleCompletedClick() {
+    async handleCompletedClick() {
       this.completed = !this.completed;
-      axios
+      await axios
         .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           "id": this.currentGame.id,
-          "rating": this.currentGame.rating,
+          "rating": this.rating,
           "user_id": getId(),
           "status": this.currentGame.status,
           "completed": this.completed,
-          "game_id": this.currentGame.game_id
+          "game_id": this.currentGame.game_id,
+          "header_image": this.currentGame.header_image,
+          "name": this.currentGame.name
         },
         {
           headers: {

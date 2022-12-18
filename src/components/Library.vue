@@ -5,10 +5,9 @@ import type { Game } from '@/models/game';
 import MeiliSearch from 'meilisearch';
 import router from '@/router';
 
-export default {
-  async mounted() {
-    // Check if user is logged in and get games from api and meilisearch db
-    let token;
+const getGames = async () => {
+  // Check if user is logged in and get games from api and meilisearch db
+  let token;
     if(isLoggedIn())
       token = getToken();
     let games = [] as any[];
@@ -21,26 +20,23 @@ export default {
       .then(res => games = res.data)
       .catch(error => console.log(error));
 
-    if(games.length === 0) {
-      this.loading = false;
-      return;
+    const client = new MeiliSearch({
+      host: import.meta.env.VITE_MEILISEARCH_HOST,
+      apiKey: import.meta.env.VITE_MEILISEARCH_KEY
+    })
+
+    return games;
+}
+
+export default {
+  async setup() {
+    const games = await getGames();
+    
+    return {
+      games
     }
-    let meiliGames = [] as Game[];
-    games.forEach(async (game) => {
-      await this.client
-        .index("games")
-        .getDocument(game.game_id)
-        .then(res => {
-          res.status = game.status;
-          res.completed = game.completed;
-          meiliGames.push(res as Game);
-        })
-        .catch(err => console.log(err));
-    });
-    setTimeout(() => {
-      this.games = meiliGames;
-      this.loading = false;
-    }, games.length * 30);
+  },
+  mounted() {
     setTimeout(function() {
       // Show scroll buttons if content overflows
       document.querySelectorAll(".drawer").forEach(element => {
@@ -49,16 +45,11 @@ export default {
           scrollButton.style.display = "block";
         }
       });
-    }, games.length * 31);
+    }, 10 * 31);
   },
   data() {
     return {
-      games: [] as Game[],
-      client: new MeiliSearch({
-        host: import.meta.env.VITE_MEILISEARCH_HOST,
-        apiKey: import.meta.env.VITE_MEILISEARCH_KEY
-      }),
-      loading: true
+      loading: false
     }
   },
   computed: {
@@ -98,8 +89,8 @@ export default {
         otherButton.style.display = "block";
       }
     },
-    showGame(game: Game) {
-      router.push(`/game/${game.id}`);
+    showGame(game: any) {
+      router.push(`/game/${game.game_id}`);
     },
   }
 }
@@ -152,7 +143,6 @@ export default {
     </div>
 
   </div>
-
 </template>
 
 <style scoped>

@@ -5,7 +5,14 @@ import Library from '../components/Library.vue';
 
 <template>
   <Header />
-  <Library />
+  <Suspense>
+    <template #default>
+      <Library />
+    </template>
+    <template #fallback>
+      <img class="loading" src="../assets/images/loading.gif" alt="loading gif">
+    </template>
+  </Suspense>
 </template>
 
 <style scoped>

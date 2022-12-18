@@ -63,14 +63,16 @@ export default {
           this.wishlistedGameIds = this.wishlistedGameIds.filter(gameId => gameId != parseInt(game.id));
           this.ownedGameIds.push(parseInt(game.id));
           let id = this.games.find(item => item.game_id == game.id).id;
-          axios
+          await axios
             .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
               "id": id,
               "game_id": game.id,
               "user_id": getId(),
               "status": status,
               "completed": false,
-              "rating": 0
+              "rating": 0,
+              "header_image": game.header_image,
+              "name": game.name
             },
             {
               headers: {
@@ -84,11 +86,13 @@ export default {
       } 
       if(status === "wishlisted") this.wishlistedGameIds.push(parseInt(game.id));
 
-      axios
+      await axios
         .post(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
           "game_id": game.id,
           "user_id": getId(),
-          "status": status
+          "status": status,
+          "header_image": game.header_image,
+          "name": game.name
         },
         {
           headers: {

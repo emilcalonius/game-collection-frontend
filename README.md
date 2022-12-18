@@ -1,40 +1,26 @@
-# video-games
+# 🎮 Video Game Collection 🎮
 
-This template should help get you started developing with Vue 3 in Vite.
+[![TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://typescriptlang.org)
+[![Vue](https://img.shields.io/badge/vue-3.2-brightgreen.svg)](https://vuejs.org/)
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+This is a frontend client for a video game collection web application.
 
-## Type Support for `.vue` Imports in TS
+## Usage
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+Test the application here: http://calonius.me/game-collection-frontend  
+  
+**OR**  
+  
+### Run the application locally
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+#### Requirements
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+1. [Video Game Collection backend](https://github.com/emilcalonius/game-collection-backend) running  
+2. [Meilisearch](https://www.meilisearch.com/) database with the games running  
+2. Environment variables containing your backend host, Meilisearch host and Meiliseach search key. Name these ``VITE_BACKEND_HOST``, ``VITE_MEILISEARCH_HOST`` and ``VITE_MEILISEARCH_KEY`` respectively.  
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+#### Run
+1. Clone this repository  
+2. Install dependencies with ``yarn install``  
+3. Run in development mode with ``yarn run dev``  

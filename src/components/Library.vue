@@ -1,12 +1,10 @@
 <script lang="ts">
 import axios from 'axios';
 import { isLoggedIn, getToken } from '@/utils/jwtUtil';
-import type { Game } from '@/models/game';
 import MeiliSearch from 'meilisearch';
 import router from '@/router';
 
 const getGames = async () => {
-  // Check if user is logged in and get games from api and meilisearch db
   let token;
     if(isLoggedIn())
       token = getToken();
@@ -153,7 +151,7 @@ export default {
 .library-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 5rem;
 }
 
 .drawer {

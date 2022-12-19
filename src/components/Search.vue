@@ -19,12 +19,14 @@ export default {
           })
           .then(res => this.games = res.data)
           .catch(error => console.log(error));
+
         let ownedGameIds = [] as number[];
         let wishlistedGameIds = [] as number[];
         this.games.forEach(game => {
           if(["owned", "completed"].includes(game.status)) ownedGameIds.push(game.game_id);
           if(game.status === "wishlisted") wishlistedGameIds.push(game.game_id);
         });
+
         this.ownedGameIds = ownedGameIds;
         this.wishlistedGameIds = wishlistedGameIds;
       }
@@ -42,10 +44,18 @@ export default {
     }
   },
   methods: {
-    async addGame(game: Game, status: string) {
+    async removeGame(gameId: number, status: string) {
       let token;
-      if(isLoggedIn())
+      if(isLoggedIn()) {
         token = getToken();
+
+        await axios
+          .delete(import.meta.env.VITE_BACKEND_HOST + "/api/game/" + gameId, {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            })
+            .catch(err => console.log(err));
 
         await axios
           .get(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
@@ -55,51 +65,67 @@ export default {
           })
           .then(res => this.games = res.data)
           .catch(error => console.log(error));
+        let ownedGameIds = [] as number[];
+        let wishlistedGameIds = [] as number[];
+        this.games.forEach(game => {
+          if(["owned", "completed"].includes(game.status)) ownedGameIds.push(game.game_id);
+          if(game.status === "wishlisted") wishlistedGameIds.push(game.game_id);
+        });
 
-      if(status === "owned") {
-        // If adding wishlisted game as owned or completed, remove from wishlisted list,
-        // add to owned list and update game through API
-        if(this.wishlistedGameIds.includes(parseInt(game.id))) {
-          this.wishlistedGameIds = this.wishlistedGameIds.filter(gameId => gameId != parseInt(game.id));
-          this.ownedGameIds.push(parseInt(game.id));
-          let id = this.games.find(item => item.game_id == game.id).id;
-          await axios
-            .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
-              "id": id,
-              "game_id": game.id,
-              "user_id": getId(),
-              "status": status,
-              "completed": false,
-              "rating": 0,
-              "header_image": game.header_image,
-              "name": game.name
-            },
-            {
-              headers: {
-                "Authorization": `Bearer ${token}`
-              }
-            })
-            .catch(err => console.log(err));
-          return;
-        }
-        this.ownedGameIds.push(parseInt(game.id));
-      } 
-      if(status === "wishlisted") this.wishlistedGameIds.push(parseInt(game.id));
+        this.ownedGameIds = ownedGameIds;
+        this.wishlistedGameIds = wishlistedGameIds;
+      }
+    },
+    async addGame(game: Game, status: string) {
+      let token;
+      if(isLoggedIn()) {
+        token = getToken();
 
-      await axios
-        .post(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
-          "game_id": game.id,
-          "user_id": getId(),
-          "status": status,
-          "header_image": game.header_image,
-          "name": game.name
-        },
-        {
-          headers: {
-            "Authorization": `Bearer ${token}`
+        if(status === "owned") {
+          // If adding wishlisted game as owned or completed, remove from wishlisted list,
+          // add to owned list and update game through API
+          if(this.wishlistedGameIds.includes(parseInt(game.id))) {
+            this.wishlistedGameIds = this.wishlistedGameIds.filter(gameId => gameId != parseInt(game.id));
+            this.ownedGameIds.push(parseInt(game.id));
+            let id = this.games.find(item => item.game_id == game.id).id;
+            await axios
+              .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
+                "id": id,
+                "game_id": game.id,
+                "user_id": getId(),
+                "status": status,
+                "completed": false,
+                "rating": 0,
+                "header_image": game.header_image,
+                "name": game.name
+              },
+              {
+                headers: {
+                  "Authorization": `Bearer ${token}`
+                }
+              })
+              .catch(err => console.log(err));
+            return;
           }
-        })
-        .catch(err => console.log(err));
+          this.ownedGameIds.push(parseInt(game.id));
+        } 
+        if(status === "wishlisted") this.wishlistedGameIds.push(parseInt(game.id));
+
+        await axios
+          .post(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
+            "game_id": game.id,
+            "user_id": getId(),
+            "status": status,
+            "header_image": game.header_image,
+            "name": game.name
+          },
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .catch(err => console.log(err));
+        }
     },
     showGame(game: Game) {
       router.push(`/game/${game.id}`);
@@ -134,16 +160,25 @@ export default {
           >
             Add
           </button>
-          <button v-else class="add-btn disabled">Add</button>
+          <button v-else class="remove-btn" @click="removeGame(parseInt(item.id), 'owned')">Remove</button>
           <button
-            v-if="!wishlistedGameIds.includes(parseInt(item.id)) 
-              && !ownedGameIds.includes(parseInt(item.id))"
+            v-if="!ownedGameIds.includes(parseInt(item.id))
+            && !wishlistedGameIds.includes(parseInt(item.id))"
             class="wishlist-btn"
             @click="addGame(item, 'wishlisted')"
           >
             Wishlist
           </button>
-          <button v-else class="wishlist-btn disabled">Wishlist</button>
+          <button 
+            v-if="wishlistedGameIds.includes(parseInt(item.id))" 
+            class="remove-btn"
+            @click="removeGame(parseInt(item.id), 'wishlisted')"
+          >
+            Unwish
+          </button>
+          <button v-if="ownedGameIds.includes(parseInt(item.id))" class="wishlist-btn disabled">
+            Wishlist
+          </button>
         </div>
       </template>
     </ais-hits>
@@ -151,9 +186,15 @@ export default {
 </template>
 
 <style>
-.add-btn, .wishlist-btn {
+.add-btn, .wishlist-btn, .remove-btn {
   padding: 7px;
   font-size: 1.2rem;
+  font-weight: bold;
+  width: 6.5rem
+}
+
+.remove-btn {
+  background-color: hsl(0, 100%, 50%);
 }
 
 .disabled {
@@ -165,7 +206,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-height: 25rem;
+  max-height: 60rem;
   max-width: 30rem;
 }
 
@@ -185,9 +226,10 @@ export default {
   gap: 1rem;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 20rem;
+  height: 50rem;
+  max-height: 50vh;
   width: max-content;
-  background-color: #303030;
+  background-color: #222222;
   padding: 1rem;
   border-radius: 10px;
 }
@@ -202,7 +244,7 @@ img {
 }
 
 .game-name {
-  font-size: 1rem;
+  font-size: 1.2rem;
   display: table-cell;
   vertical-align: middle;
 }
@@ -241,6 +283,10 @@ img {
   .disabled:hover {
     cursor: default;
     background-color: lightslategray;
+  }
+
+  .remove-btn:hover {
+    background-color: rgb(133, 0, 0);
   }
 }
 </style>

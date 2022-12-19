@@ -2,13 +2,15 @@
 import { getToken, isLoggedIn, getId } from '@/utils/jwtUtil';
 import axios from 'axios';
 
+import type { Game } from '../models/game';
+
 export default {
   props: ['game'],
   data() {
     return {
       currentGame: {} as any,
       completed: false,
-      rating: 0
+      rating: 0,
     }
   },
   async mounted() {
@@ -26,21 +28,107 @@ export default {
         .catch(err => console.log(err));
       if(games.length !== 0) {
         const currentGame = games.find(item => item.game_id == this.game.id);
-        this.currentGame = currentGame;
-        this.completed = currentGame.completed;
-        setTimeout(function() {
-          document.querySelectorAll(".star").forEach((star, index) => {
-            if(index < currentGame.rating) {
-              star.classList.add("active");
-            }
-          })
-        }, 1);
+        if(currentGame !== undefined && currentGame !== null) {
+          this.currentGame = currentGame;
+          this.completed = currentGame.completed;
+          this.rating = currentGame.rating;
+          setTimeout(function() {
+            document.querySelectorAll(".star").forEach((star, index) => {
+              if(index < currentGame.rating) {
+                star.classList.add("active");
+              }
+            })
+          }, 1);
+        }
       }
     }
   },
   methods: {
     isLoggedIn() {
       return isLoggedIn();
+    },
+    async addGame(game: Game, status: string) {
+      let token;
+      if(isLoggedIn()) {
+        token = getToken();
+
+        // If game is wishlisted and game is to be added as owned, update game's status, else add game as new
+        if(Object.keys(this.currentGame).length > 0 && this.currentGame.status === "wishlisted") {
+          await axios
+              .patch(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
+                "id": this.currentGame.id,
+                "game_id": game.id,
+                "user_id": getId(),
+                "status": status,
+                "completed": false,
+                "rating": 0,
+                "header_image": game.header_image,
+                "name": game.name
+              },
+              {
+                headers: {
+                  "Authorization": `Bearer ${token}`
+                }
+              })
+              .catch(err => console.log(err));
+        } else {
+        await axios
+          .post(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
+            "game_id": game.id,
+            "user_id": getId(),
+            "status": status,
+            "header_image": game.header_image,
+            "name": game.name
+          },
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .catch(err => console.log(err));
+        }
+
+        let games = [] as any[];
+        await axios
+          .get(import.meta.env.VITE_BACKEND_HOST + "/api/game", {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .then(res => games = res.data)
+          .catch(err => console.log(err));
+        if(games.length !== 0) {
+          const currentGame = games.find(item => item.game_id == this.game.id);
+          if(currentGame !== undefined && currentGame !== null) {
+            this.currentGame = currentGame;
+            this.completed = currentGame.completed;
+            this.rating = currentGame.rating;
+            setTimeout(function() {
+              document.querySelectorAll(".star").forEach((star, index) => {
+                if(index < currentGame.rating) {
+                  star.classList.add("active");
+                }
+              })
+            }, 1);
+          }
+        }
+      }
+    },
+    async removeGame(gameId: number) {
+      let token;
+      if(isLoggedIn()) {
+        token = getToken();
+
+        await axios
+          .delete(import.meta.env.VITE_BACKEND_HOST + "/api/game/" + gameId, {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            })
+            .catch(err => console.log(err));
+
+        this.currentGame = {};
+      }
     },
     async rateGame(rating: number) {
       this.rating = rating;
@@ -68,7 +156,6 @@ export default {
             "Authorization": `Bearer ${getToken()}`
           }
         })
-        .then(res => console.log(res))
         .catch(err => console.log(err));
     },
     async handleCompletedClick() {
@@ -89,7 +176,6 @@ export default {
             "Authorization": `Bearer ${getToken()}`
           }
         })
-        .then(res => console.log(res))
         .catch(err => console.log(err));
     }
   }
@@ -97,29 +183,70 @@ export default {
 </script>
 
 <template>
-  <div v-if="isLoggedIn() && Object.keys(currentGame).length > 0 && currentGame.status === 'owned'" class="user-info">
-    <div class="rating">
-      <h3>Rating:</h3>
-      <div class="stars">
-        <img class="star" @click="rateGame(1)" src="../assets/images/star_filled.svg" alt="filled star"/>
-        <img class="star" @click="rateGame(2)" src="../assets/images/star_filled.svg" alt="filled star"/>
-        <img class="star" @click="rateGame(3)" src="../assets/images/star_filled.svg" alt="filled star"/>
-        <img class="star" @click="rateGame(4)" src="../assets/images/star_filled.svg" alt="filled star"/>
-        <img class="star" @click="rateGame(5)" src="../assets/images/star_filled.svg" alt="filled star"/>
+  <template v-if="isLoggedIn()">
+    <div v-if="Object.keys(currentGame).length > 0 && currentGame.status === 'owned'" class="user-info">
+      <div class="rating">
+        <h3>Rating:</h3>
+        <div class="stars">
+          <img class="star" @click="rateGame(1)" src="../assets/images/star_filled.svg" alt="filled star"/>
+          <img class="star" @click="rateGame(2)" src="../assets/images/star_filled.svg" alt="filled star"/>
+          <img class="star" @click="rateGame(3)" src="../assets/images/star_filled.svg" alt="filled star"/>
+          <img class="star" @click="rateGame(4)" src="../assets/images/star_filled.svg" alt="filled star"/>
+          <img class="star" @click="rateGame(5)" src="../assets/images/star_filled.svg" alt="filled star"/>
+        </div>
+      </div>
+      <div class="completed">
+        <h3>Completed:</h3>
+        <img @click="handleCompletedClick()" v-if="!completed" class="checkbox" src="../assets/images/checkbox_empty.svg" alt="checkbox" />
+        <img @click="handleCompletedClick()" v-if="completed" class="checkbox" src="../assets/images/checkbox_checked.svg" alt="checkbox" />
       </div>
     </div>
-    <div class="completed">
-      <h3>Completed:</h3>
-      <img @click="handleCompletedClick()" v-if="!completed" class="checkbox" src="../assets/images/checkbox_empty.svg" alt="checkbox" />
-      <img @click="handleCompletedClick()" v-if="completed" class="checkbox" src="../assets/images/checkbox_checked.svg" alt="checkbox" />
+    <div v-if="isLoggedIn() && Object.keys(currentGame).length > 0 && currentGame.status === 'wishlisted'" class="wishlisted">
+      <h2>🌠 On your wishlist</h2>
     </div>
-  </div>
-  <div v-if="isLoggedIn() && Object.keys(currentGame).length > 0 && currentGame.status === 'wishlisted'" class="wishlisted">
-    <h2>🌠 On your wishlist</h2>
-  </div>
+    <button 
+      v-if="Object.keys(currentGame).length === 0 || currentGame.status === 'wishlisted'" 
+      class="add-button" 
+      @click="addGame(game, 'owned')"
+    >
+      ✅ add to collection
+    </button>
+    <button 
+      v-if="Object.keys(currentGame).length > 0 && currentGame.status === 'owned'" 
+      class="remove-button" 
+      @click="removeGame(parseInt(currentGame.game_id))"
+    >
+      🗑️ remove from collection
+    </button>
+    <button 
+      v-if="Object.keys(currentGame).length === 0" 
+      class="add-button" 
+      @click="addGame(game, 'wishlisted')"
+    >
+      🌠 add to wishlist
+    </button>
+    <button 
+      v-if="Object.keys(currentGame).length > 0 && currentGame.status === 'wishlisted'" 
+      class="remove-button" 
+      @click="removeGame(parseInt(currentGame.game_id))"
+    >
+      🚫 remove from wishlist
+    </button>
+  </template>
 </template>
 
 <style scoped>
+.add-button {
+  width: max-content;
+}
+
+.remove-button {
+  background-color: hsl(0, 100%, 50%);
+  font-size: 1.3rem;
+  font-weight: bold;
+  width: max-content;
+}
+
 .wishlisted {
   background-color: #363636;
   padding: 0.5rem;
@@ -163,7 +290,7 @@ export default {
   width: max-content;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .completed {
@@ -174,5 +301,11 @@ export default {
 .checkbox {
   width: 2rem;
   cursor: pointer;
+}
+
+@media (hover: hover) {
+  .remove-button:hover {
+    background-color: rgb(133, 0, 0);
+  }
 }
 </style>

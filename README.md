@@ -18,7 +18,7 @@ Test the application here: http://calonius.me/game-collection-frontend
 
 1. [Video Game Collection backend](https://github.com/emilcalonius/game-collection-backend) running  
 2. [Meilisearch](https://www.meilisearch.com/) database with the games running  
-2. Environment variables containing your backend host, Meilisearch host and Meiliseach search key. Name these ``VITE_BACKEND_HOST``, ``VITE_MEILISEARCH_HOST`` and ``VITE_MEILISEARCH_KEY`` respectively.  
+2. Environment variables containing your backend host, Meilisearch host and Meilisearch search key. Name these ``VITE_BACKEND_HOST``, ``VITE_MEILISEARCH_HOST`` and ``VITE_MEILISEARCH_KEY`` respectively.  
 
 #### Run
 1. Clone this repository  

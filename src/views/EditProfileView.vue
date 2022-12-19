@@ -36,6 +36,21 @@ export default {
 
 <template>
   <Header />
-  <h1>Profile</h1>
-  <EditUserInfo :user="user" />
+  <div class="edit-profile-container">
+    <h1>Profile</h1>
+    <EditUserInfo :user="user" />
+  </div>
 </template>
+
+<style scoped>
+.edit-profile-container {
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 500px) { 
+  .edit-profile-container {
+    height: 85vh;
+  }
+}
+</style>

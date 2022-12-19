@@ -104,4 +104,10 @@ button {
   width: 5rem;
   border-radius: 10px;
 }
+
+@media only screen and (max-width: 500px) {
+  input, textarea {
+    width: 100%;
+  }
+}
 </style>

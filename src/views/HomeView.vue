@@ -6,18 +6,25 @@ import Header from '../components/Header.vue';
 
 <template>
   <Header />
-  <main class="main">
+  <div class="home-container">
     <Welcome />
     <Search />
-  </main>
+  </div>
 </template>
 
 <style scoped>
-.main {
+.home-container {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1rem;
   align-items: center;
-  justify-content: center;
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 500px) { 
+  .home-container {
+    height: 85vh;
+  }
 }
 </style>

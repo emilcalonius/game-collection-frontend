@@ -7,14 +7,27 @@ import Library from '../components/Library.vue';
   <Header />
   <Suspense>
     <template #default>
-      <Library />
+      <div class="collection-container">
+        <Library />
+      </div>
     </template>
     <template #fallback>
-      <img class="loading" src="../assets/images/loading.gif" alt="loading gif">
+      <div class="collection-container">
+        <img class="loading" src="../assets/images/loading.gif" alt="loading gif">
+      </div>
     </template>
   </Suspense>
 </template>
 
 <style scoped>
+.collection-container {
+  padding: 1rem;
+  overflow-y: scroll;
+}
 
+@media only screen and (max-width: 500px) { 
+  .collection-container {
+    height: 85vh;
+  }
+}
 </style>

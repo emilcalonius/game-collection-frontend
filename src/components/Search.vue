@@ -206,8 +206,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-height: 60rem;
-  max-width: 30rem;
 }
 
 .ais-SearchBox-input {
@@ -226,8 +224,7 @@ export default {
   gap: 1rem;
   flex-direction: column;
   overflow-y: scroll;
-  height: 50rem;
-  max-height: 50vh;
+  max-height: 55vh;
   width: max-content;
   background-color: #222222;
   padding: 1rem;
@@ -287,6 +284,16 @@ img {
 
   .remove-btn:hover {
     background-color: rgb(133, 0, 0);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .buttons {
+    display: none;
+  }
+
+  .ais-Hits-list {
+    max-width: 20rem;
   }
 }
 </style>

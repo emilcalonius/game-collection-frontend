@@ -38,7 +38,7 @@ export default {
     setTimeout(function() {
       // Show scroll buttons if content overflows
       document.querySelectorAll(".drawer").forEach(element => {
-        if(element.scrollWidth > element.clientWidth) {
+        if(element.scrollWidth > element.clientWidth && window.innerWidth > 500) {
           const scrollButton: HTMLElement = element.lastElementChild as HTMLElement;
           scrollButton.style.display = "block";
         }
@@ -198,7 +198,7 @@ export default {
 
 .scroll-btn {
   position: sticky;
-  z-index: 2;
+  z-index: 1;
   height: 5rem;
   display: none;
   margin-top: 1rem;
@@ -210,5 +210,11 @@ export default {
 
 .scroll-btn-left {
   left: 0.5rem;
+}
+
+@media only screen and (max-width: 500px) { 
+  .scroll-btn {
+    display: none;
+  }
 }
 </style>

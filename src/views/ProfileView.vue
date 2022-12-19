@@ -36,6 +36,21 @@ export default {
 
 <template>
   <Header />
-  <h1>Profile</h1>
-  <UserInfo :user="user" />
+  <div class="profile-container">
+    <h1>Profile</h1>
+    <UserInfo :user="user" />
+  </div>
 </template>
+
+<style scoped>
+.profile-container {
+  overflow-y: scroll;
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 500px) { 
+  .profile-container {
+    height: 85vh;
+  }
+}
+</style>

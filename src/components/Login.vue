@@ -73,4 +73,14 @@ button {
   color: red;
   font-size: 1.5rem;
 }
+
+@media only screen and (max-width: 500px) {
+  button {
+    width: 100%;
+  }
+
+  input {
+    width: 100%
+  }
+}
 </style>

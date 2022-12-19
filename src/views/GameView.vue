@@ -5,8 +5,20 @@ import GameInfo from '@/components/GameInfo.vue';
 
 <template>
   <Header />
-  <GameInfo />
+  <div class="game-info-container">
+    <GameInfo />
+  </div>
 </template>
 
 <style scoped>
+.game-info-container {
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 500px) { 
+  .game-info-container {
+    height: 85vh;
+  }
+}
 </style>

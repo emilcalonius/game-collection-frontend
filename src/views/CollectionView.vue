@@ -27,7 +27,7 @@ import Library from '../components/Library.vue';
 
 @media only screen and (max-width: 500px) { 
   .collection-container {
-    height: 85vh;
+    height: 90vh;
   }
 }
 </style>

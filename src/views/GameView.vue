@@ -18,7 +18,7 @@ import GameInfo from '@/components/GameInfo.vue';
 
 @media only screen and (max-width: 500px) { 
   .game-info-container {
-    height: 85vh;
+    height: 90vh;
   }
 }
 </style>

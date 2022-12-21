@@ -24,7 +24,7 @@ import Header from '../components/Header.vue';
 
 @media only screen and (max-width: 500px) { 
   .home-container {
-    height: 85vh;
+    height: 90vh;
   }
 }
 </style>

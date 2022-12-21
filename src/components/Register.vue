@@ -54,6 +54,10 @@ export default {
   gap: 1rem;
 }
 
+.register-form {
+  padding: 1rem;
+}
+
 input {
   width: 20rem;
   border-radius: 10px;

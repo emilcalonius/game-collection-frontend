@@ -50,7 +50,7 @@ export default {
 
 @media only screen and (max-width: 500px) { 
   .edit-profile-container {
-    height: 85vh;
+    height: 90vh;
   }
 }
 </style>

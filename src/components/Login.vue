@@ -53,6 +53,10 @@ export default {
   gap: 1rem;
 }
 
+.login-form {
+  padding: 1rem;
+}
+
 input {
   width: 20rem;
   border-radius: 10px;

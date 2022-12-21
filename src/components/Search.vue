@@ -210,6 +210,7 @@ export default {
 
 .ais-SearchBox-input {
   width: 20rem;
+  max-width: 80vw;
   height: 3rem;
   font-size: 1.5rem;
   border-radius: 10px;
@@ -224,7 +225,7 @@ export default {
   gap: 1rem;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 55vh;
+  max-height: 50vh;
   width: max-content;
   background-color: #222222;
   padding: 1rem;
@@ -293,7 +294,8 @@ img {
   }
 
   .ais-Hits-list {
-    max-width: 20rem;
+    width: 20rem;
+    max-width: 80vw
   }
 }
 </style>

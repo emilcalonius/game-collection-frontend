@@ -50,6 +50,7 @@ function logout() {
 
 .header-container {
   padding: 1rem;
+  padding-bottom: 0;
   display: flex;
   justify-content: space-between;
 }
@@ -76,6 +77,10 @@ function logout() {
 }
 
 @media only screen and (max-width: 500px) {
+  .header-container {
+    height: 10vh;
+  }
+
   .btns {
     display: flex;
     flex-direction: column;

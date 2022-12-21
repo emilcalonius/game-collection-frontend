@@ -79,8 +79,4 @@ button {
     max-height: 100vh;
     overflow-x: hidden;
   }
-
-  .header-container {
-    height: 15vh;
-  }
 }

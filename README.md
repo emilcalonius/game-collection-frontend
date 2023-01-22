@@ -8,7 +8,7 @@ This is a frontend client for a video game collection web application.
 
 ## Usage
 
-Test the application here: http://calonius.me/game-collection-frontend  
+Test the application here: https://calonius.me/game-collection-frontend  
   
 **OR**  
   

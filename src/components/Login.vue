@@ -47,6 +47,10 @@ export default {
 </template>
 
 <style scoped>
+.login-form {
+  padding: 1rem;
+}
+
 .login-form, form {
   display: flex;
   flex-direction: column;

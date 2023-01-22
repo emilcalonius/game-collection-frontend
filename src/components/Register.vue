@@ -48,6 +48,10 @@ export default {
 </template>
 
 <style scoped>
+.register-form {
+  padding: 1rem;
+}
+
 .register-form, form {
   display: flex;
   flex-direction: column;

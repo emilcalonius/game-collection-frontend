@@ -29,6 +29,7 @@ button {
   border-radius: 10px;
   font-size: larger;
   font-size: 1.5rem;
+  border: 0;
 }
 
 /* Scrollbar styles */

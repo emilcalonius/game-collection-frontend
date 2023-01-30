@@ -68,6 +68,7 @@ function logout() {
   background-color: rgb(0, 255, 215);
   border-radius: 10px;
   color: var(--vt-c-black);
+  border: 0;
 }
 
 @media(hover: hover) {

@@ -65,7 +65,7 @@ function logout() {
 }
 
 .login {
-  background-color: rgb(0, 255, 215);
+  background-color: var(--ec-green-dark);
   border-radius: 10px;
   color: var(--vt-c-black);
   border: 0;
@@ -73,7 +73,7 @@ function logout() {
 
 @media(hover: hover) {
   .login:hover {
-    background-color: rgb(0, 189, 160);
+    background-color: hsl(109, 12%, 43%);
   }
 }
 
@@ -105,7 +105,7 @@ function logout() {
   #bar3 {
     width: 35px;
     height: 5px;
-    background-color: rgb(0, 255, 215);;
+    background-color: var(--ec-green-dark);
     margin: 6px 0;
     transition: 0.4s;
   }
@@ -139,6 +139,7 @@ function logout() {
   }
 
   #nav-btns[data-state="open"] {
+    margin-top: 2rem;
     height: 100vh;
     border-radius: 0%;
     width: 102vw;

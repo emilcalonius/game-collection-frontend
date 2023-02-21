@@ -102,12 +102,12 @@ export default {
       <div class="drawer">
         <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="loading gif">
         <div v-else class="game no-game" v-if="owned.length === 0">No games here yet...</div>
-        <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
+        <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">←</button>
         <div v-for="game in owned" class="game">
           <img class="game-header" :src="game.header_image" alt="game header image" @click="showGame(game)">
           <p class="game-name">{{ game.name }}</p>
         </div>
-        <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">></button>
+        <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">→</button>
       </div>
     </div>
 
@@ -116,12 +116,12 @@ export default {
       <div class="drawer">
         <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="loading gif">
         <div v-else class="game no-game" v-if="wishlisted.length === 0">No games here yet...</div>
-        <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
+        <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">←</button>
         <div v-for="game in wishlisted" class="game">
           <img class="game-header" :src="game.header_image" alt="game header image" @click="showGame(game)">
           <p class="game-name">{{ game.name }}</p>
         </div>
-        <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">></button>
+        <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">→</button>
       </div>
     </div>
 
@@ -130,12 +130,12 @@ export default {
       <div class="drawer">
         <img class="loading" v-if="loading" src="../assets/images/loading.gif" alt="loading gif">
         <div v-else class="game no-game" v-if="completed.length === 0">No games here yet...</div>
-        <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">&lt;</button>
+        <button class="scroll-btn scroll-btn-left" @click="(event) => scrollDrawer(event, 'back')">←</button>
         <div v-for="game in completed" class="game">
           <img class="game-header" :src="game.header_image" alt="game header image" @click="showGame(game)">
           <p class="game-name">{{ game.name }}</p>
         </div>
-        <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">></button>
+        <button class="scroll-btn scroll-btn-right" @click="(event) => scrollDrawer(event, 'forward')">→</button>
       </div>
 
     </div>

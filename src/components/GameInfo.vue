@@ -102,9 +102,9 @@ export default {
     <p>{{ game.about_the_game }}</p>
     <h2>Screenshots:</h2>
     <div class="screenshots" id="screenshots">
-      <button class="scroll-btn scroll-btn-left" @click="(event) => scrollScreenshots(event, 'back')">&lt;</button>
+      <button class="scroll-btn scroll-btn-left" @click="(event) => scrollScreenshots(event, 'back')">←</button>
       <img class="screenshot" v-for="gameScreenshot in game.screenshots" :src="gameScreenshot" alt="screenshot" />
-      <button class="scroll-btn scroll-btn-right" @click="(event) => scrollScreenshots(event, 'forward')">></button>
+      <button class="scroll-btn scroll-btn-right" @click="(event) => scrollScreenshots(event, 'forward')">→</button>
     </div>
   </div>
 </template>

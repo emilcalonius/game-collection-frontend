@@ -230,7 +230,7 @@ export default {
       class="remove-button" 
       @click="removeGame(parseInt(currentGame.game_id))"
     >
-      🚫 remove from wishlist
+      🗑️ remove from wishlist
     </button>
   </template>
 </template>
@@ -238,12 +238,15 @@ export default {
 <style scoped>
 .add-button {
   width: max-content;
+  background-color: transparent;
+  color: hsl(150, 100%, 41%);
+  font-size: 1.3rem;
 }
 
 .remove-button {
-  background-color: hsl(0, 100%, 50%);
+  background-color: transparent;
+  color: hsl(1, 93%, 58%);
   font-size: 1.3rem;
-  font-weight: bold;
   width: max-content;
 }
 
@@ -305,7 +308,11 @@ export default {
 
 @media (hover: hover) {
   .remove-button:hover {
-    background-color: rgb(133, 0, 0);
+    background-color: hsla(0, 100%, 26%, 0.103);
+  }
+
+  .add-button:hover {
+    background-color: hsla(150, 100%, 41%, 0.075);
   }
 }
 </style>
